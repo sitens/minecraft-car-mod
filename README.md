@@ -6,7 +6,7 @@ build them. Targeting release on Modrinth.
 
 Mod id: `carmod` / package `com.kiancars.carmod` — confirmed final.
 
-**[Download the latest build (carmod-0.1.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.1.0)**
+**[Download the latest build (carmod-0.1.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.1.1)**
 
 ## How to test this on your computer
 
