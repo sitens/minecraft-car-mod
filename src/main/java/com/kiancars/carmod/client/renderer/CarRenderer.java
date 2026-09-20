@@ -1,25 +1,24 @@
 package com.kiancars.carmod.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.kiancars.carmod.CarMod;
 import com.kiancars.carmod.entity.CarEntity;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
 /**
- * Placeholder renderer: draws nothing fancy yet, just resolves per-variant
- * texture paths under {@code assets/carmod/textures/entity/car/<id>.png}
- * (not yet supplied — point these at real textures once art exists). Model
- * itself is a plain box for now.
+ * Placeholder renderer. Confirmed against the real 1.21.11 sources: entity
+ * rendering was overhauled to a render-state pattern —
+ * {@code EntityRenderer<T extends Entity, S extends EntityRenderState>} no
+ * longer has a {@code render(...)} or {@code getTextureLocation(...)} method
+ * to override; per-frame drawing happens in {@code submit(S, ...)} against a
+ * plain data snapshot ({@code S}), not the live entity.
  * <p>
- * NOTE: verify {@code EntityRenderer}'s constructor / render() signature
- * against 1.21.11 before relying on this — entity rendering has a fair
- * amount of version churn (PoseStack vs. matrix helpers, model layer
- * registration via EntityRendererProvider.Context, etc.).
+ * This leaves the default (no-op body/model, nametag only) behavior in
+ * place — cars are trackable and rideable but invisible until a real model
+ * is built. That's an intentional placeholder, not a bug: see
+ * {@code README.md}'s "Status" section.
  */
-public class CarRenderer extends EntityRenderer<CarEntity> {
+public class CarRenderer extends EntityRenderer<CarEntity, EntityRenderState> {
 
     public CarRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -27,16 +26,7 @@ public class CarRenderer extends EntityRenderer<CarEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(CarEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath(CarMod.MOD_ID,
-                "textures/entity/car/" + entity.getCarType().getId() + ".png");
-    }
-
-    @Override
-    public void render(CarEntity entity, float entityYaw, float partialTicks, PoseStack poseStack,
-                        MultiBufferSource buffer, int packedLight) {
-        // TODO: actual box/geo model + texture mapping. Left minimal so the
-        // entity at least exists and is trackable/ridable before art lands.
-        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+    public EntityRenderState createRenderState() {
+        return new EntityRenderState();
     }
 }

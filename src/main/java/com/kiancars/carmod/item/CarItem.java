@@ -37,7 +37,7 @@ public class CarItem extends Item {
             return InteractionResult.PASS;
         }
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             CarEntity car = new CarEntity(level, carType);
             car.setPos(hit.getLocation().x, hit.getLocation().y, hit.getLocation().z);
             car.setYRot(player.getYRot());

@@ -2,7 +2,10 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.+'
+    // Exact version required: Gradle's plugins{} DSL doesn't accept dynamic
+    // versions like "2.0.+". Confirmed latest at
+    // https://plugins.gradle.org/plugin/net.neoforged.moddev (checked 2026-09-19).
+    id 'net.neoforged.moddev' version '2.0.147'
 }
 
 version = mod_version
@@ -17,12 +20,10 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 neoForge {
     version = neo_version
 
-    parchment {
-        // Optional: better parameter names for decompiled MC/NeoForge code.
-        // Remove this block if you don't want the parchment dependency.
-        mappingsVersion = "2026.01.01"
-        minecraftVersion = minecraft_version
-    }
+    // Parchment mappings (nicer decompiled parameter names) skipped for now —
+    // no confirmed published mapping version for 1.21.11 yet. Add back via
+    // `parchment { mappingsVersion = "..."; minecraftVersion = minecraft_version }`
+    // once one exists at https://maven.parchmentmc.org.
 
     runs {
         client {

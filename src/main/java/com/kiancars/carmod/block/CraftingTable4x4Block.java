@@ -29,18 +29,14 @@ public class CraftingTable4x4Block extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, net.minecraft.core.BlockPos pos,
                                                 Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
+        if (!level.isClientSide()) {
+            MenuProvider menuProvider = new SimpleMenuProvider(
+                    (windowId, inventory, p) -> new CraftingTable4x4Menu(windowId, inventory, level, pos),
+                    Component.translatable("container.carmod.crafting_table_4x4")
+            );
+            player.openMenu(menuProvider);
+            player.awardStat(net.minecraft.stats.Stats.INTERACT_WITH_CRAFTING_TABLE);
         }
-
-        MenuProvider menuProvider = new SimpleMenuProvider(
-                (windowId, inventory, p) -> new CraftingTable4x4Menu(windowId, inventory, level, pos),
-                Component.translatable("container.carmod.crafting_table_4x4")
-        );
-        player.openMenu(menuProvider);
-        // NOTE: vanilla's crafting table also calls a stat-increment here
-        // (player.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE)) — add once
-        // wired against confirmed 1.21.11 Stats constants.
-        return InteractionResult.CONSUME;
+        return InteractionResult.SUCCESS;
     }
 }

@@ -1,32 +1,32 @@
-# Car Mod (working title)
+# Car Mod
 
 NeoForge mod for Minecraft Java Edition **1.21.11**. Adds 10 craftable,
 rideable cars and a "Reinforced Crafting Table" (4x4 grid) required to
 build them. Targeting release on Modrinth.
 
-Working mod id: `carmod` — the project name is undecided; rename via a
-project-wide find/replace of `carmod` / `com.kiancars.carmod` / "Car Mod"
-once a real name is picked (also update `settings.gradle`'s `rootProject.name`
-and `gradle.properties`).
+Mod id: `carmod` / package `com.kiancars.carmod` — confirmed final.
 
-## Status: early scaffold, not yet building/tested
+## Status: builds successfully, not yet run/playtested
 
-This was scaffolded without a live Gradle sync against real NeoForge
-1.21.11 artifacts, so treat the following as "needs verification on first
-build" rather than confirmed-working:
+`./gradlew build` succeeds and produces `build/libs/carmod-0.1.0.jar`
+(confirmed against real NeoForge 21.11.45 / MC 1.21.11 artifacts). Known
+gaps before this is genuinely playable:
 
-- `neo_version` / `neoform_version` in `gradle.properties` are placeholders —
-  fill in the real published versions from
-  https://projects.neoforged.net/neoforged/neoforge before syncing.
-- `CraftingTable4x4Menu` — `stillValid`, `quickMoveStack` (shift-click), and
-  the `slotChangedCraftingGrid` helper call are stubbed/unverified against
-  1.21.11's actual `AbstractContainerMenu`/crafting-grid APIs.
-- `CarEntity` — the abstract drop-item method inherited from `AbstractBoat`
-  is not wired up (signature uncertain across versions); see the NOTE in
-  that file.
+- Not yet launched in a dev client (`./gradlew runClient`) or playtested —
+  compiling clean doesn't guarantee correct runtime behavior.
+- `CarEntity`'s drop/pick-block item is hardcoded to the Sedan regardless of
+  actual variant — `AbstractBoat`'s drop-item supplier is fixed at
+  construction time and can't legally read the entity's own synced data
+  before `super()` returns. Placement (via `CarItem`) is already
+  variant-correct; only break/pick-block is affected. See the note in
+  `CarEntity.java` and the task in `tasks.md`.
 - No real textures/models/sounds yet — blocks/items reuse vanilla crafting
-  table and boat textures as placeholders; the car entity renderer draws
-  vanilla's default fallback (no custom model).
+  table and boat textures as placeholders; the car entity renderer uses the
+  engine's default fallback (no custom model) since 1.21.11's entity
+  rendering moved to a render-state/`submit()` architecture that this
+  scaffold only stubs (`CarRenderer.createRenderState()`).
+- The 4x4 crafting table screen draws a flat placeholder panel, not a real
+  GUI texture.
 
 ## Design
 
@@ -43,11 +43,17 @@ build" rather than confirmed-working:
 
 ## Building
 
-Requires JDK 21. Once real NeoForge version numbers are filled in:
+Requires JDK 21.
 
 ```bash
 ./gradlew build
 ```
+
+The first build downloads and decompiles Minecraft/NeoForge (~10-15
+minutes); later builds are fast. If you're behind a TLS-intercepting
+antivirus/proxy (e.g. Avast), Gradle's HTTPS downloads will fail with
+"Plugin ... was not found" or silent timeouts even though a browser works
+fine — import that tool's root CA into your JDK's `cacerts` keystore.
 
 ## License
 

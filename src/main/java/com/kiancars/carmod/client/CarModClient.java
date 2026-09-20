@@ -11,7 +11,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
-@EventBusSubscriber(modid = CarMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+// NOTE: confirmed against real 1.21.11 sources — EventBusSubscriber dropped
+// its bus()/Bus element entirely; it now only targets the mod event bus,
+// selected here for the client distribution via value = Dist.CLIENT.
+@EventBusSubscriber(modid = CarMod.MOD_ID, value = Dist.CLIENT)
 public final class CarModClient {
 
     @SubscribeEvent
