@@ -1,0 +1,5 @@
+{
+  "_comment": "Placeholder icon (reuses vanilla oak_boat texture) until real car art exists.",
+  "parent": "item/generated",
+  "textures": { "layer0": "minecraft:item/oak_boat" }
+}

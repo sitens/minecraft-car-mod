@@ -1,0 +1,17 @@
+{
+  "_comment": "Tier 1/10. Every row is 4 wide -> will not fit a vanilla 3x3 table, forcing use of carmod:crafting_table_4x4.",
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "IGGI",
+    "IIII"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "G": { "item": "minecraft:glass_pane" }
+  },
+  "result": {
+    "id": "carmod:car_sedan",
+    "count": 1
+  }
+}

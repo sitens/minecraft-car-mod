@@ -1,0 +1,15 @@
+{
+  "itemGroup.carmod.car_tab": "Car Mod",
+  "block.carmod.crafting_table_4x4": "Reinforced Crafting Table",
+  "container.carmod.crafting_table_4x4": "Reinforced Crafting Table",
+  "item.carmod.car_sedan": "Sedan",
+  "item.carmod.car_pickup": "Pickup Truck",
+  "item.carmod.car_offroader": "Off-Roader",
+  "item.carmod.car_sports_car": "Sports Car",
+  "item.carmod.car_limousine": "Limousine",
+  "item.carmod.car_racer": "Racer",
+  "item.carmod.car_monster_truck": "Monster Truck",
+  "item.carmod.car_armored_car": "Armored Car",
+  "item.carmod.car_hover_prototype": "Hover Prototype",
+  "item.carmod.car_golden_luxury": "Golden Luxury Car"
+}

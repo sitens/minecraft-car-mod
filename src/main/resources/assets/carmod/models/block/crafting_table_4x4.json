@@ -1,0 +1,9 @@
+{
+  "_comment": "Placeholder: reuses vanilla crafting_table textures until real art exists. Swap 'minecraft:block/...' for carmod-namespaced textures later.",
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/crafting_table_bottom",
+    "top": "minecraft:block/crafting_table_top",
+    "side": "minecraft:block/crafting_table_side"
+  }
+}

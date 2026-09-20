@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "carmod:block/crafting_table_4x4" }
+  }
+}

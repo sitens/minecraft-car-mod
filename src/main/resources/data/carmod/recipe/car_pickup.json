@@ -1,0 +1,17 @@
+{
+  "_comment": "Tier 2/10.",
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CIIC",
+    "IIII"
+  ],
+  "key": {
+    "C": { "item": "minecraft:copper_ingot" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "result": {
+    "id": "carmod:car_pickup",
+    "count": 1
+  }
+}

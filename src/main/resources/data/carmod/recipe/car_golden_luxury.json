@@ -1,0 +1,21 @@
+{
+  "_comment": "Tier 10/10 - hardest to craft.",
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "GDDG",
+    "NBBN",
+    "NBBN",
+    "GDDG"
+  ],
+  "key": {
+    "G": { "item": "minecraft:gold_block" },
+    "D": { "item": "minecraft:diamond" },
+    "N": { "item": "minecraft:netherite_ingot" },
+    "B": { "item": "minecraft:diamond_block" }
+  },
+  "result": {
+    "id": "carmod:car_golden_luxury",
+    "count": 1
+  }
+}

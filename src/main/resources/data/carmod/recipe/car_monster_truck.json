@@ -1,0 +1,20 @@
+{
+  "_comment": "Tier 7/10.",
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "DIID",
+    "IBBI",
+    "IBBI",
+    "DIID"
+  ],
+  "key": {
+    "D": { "item": "minecraft:diamond" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "B": { "item": "minecraft:iron_block" }
+  },
+  "result": {
+    "id": "carmod:car_monster_truck",
+    "count": 1
+  }
+}

@@ -1,0 +1,71 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.+'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = neo_version
+
+    parchment {
+        // Optional: better parameter names for decompiled MC/NeoForge code.
+        // Remove this block if you don't want the parchment dependency.
+        mappingsVersion = "2026.01.01"
+        minecraftVersion = minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run')
+        }
+        server {
+            server()
+            gameDirectory = project.file('run/server')
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // NeoForge dependency itself is supplied by the neoForge{} block above.
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    var replaceProperties = [
+        minecraft_version: minecraft_version,
+        mod_id           : mod_id,
+        mod_name         : mod_name,
+        mod_license      : mod_license,
+        mod_version      : mod_version,
+        mod_authors      : mod_authors,
+        mod_description  : mod_description,
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties + [project: project]
+    }
+}
