@@ -6,6 +6,34 @@ build them. Targeting release on Modrinth.
 
 Mod id: `carmod` / package `com.kiancars.carmod` — confirmed final.
 
+**[Download the latest build (carmod-0.1.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.1.0)**
+
+## How to test this on your computer
+
+**1. Install Minecraft's mod loader (NeoForge)**
+- Go to https://neoforged.net/
+- Download the installer for version **1.21.11**
+- Run it, pick "Install client", click OK
+
+**2. Put the mod file in the right folder**
+- Press `Windows key + R`
+- Type `%appdata%\.minecraft\mods` and hit Enter
+- If a "mods" folder doesn't exist, make one
+- Drop `carmod-0.1.0.jar` (link above) into that folder
+
+**3. Launch it**
+- Open the Minecraft Launcher
+- In the dropdown at the bottom left, pick the "neoforge" version
+- Click Play
+
+**4. What to check**
+- Make a new world (Creative mode is easiest)
+- Get 9 wood planks, put them in a crafting grid → should make a bigger crafting table
+- Place that table, right-click it → should open a bigger crafting screen
+- Search "Car Mod" in the creative inventory to grab items/recipes to test
+
+**Heads up:** cars won't look like anything yet (no art made yet) — they'll be invisible when placed, but you should still be able to ride them around. That's expected for now, not broken.
+
 ## Status: builds successfully, not yet run/playtested
 
 `./gradlew build` succeeds and produces `build/libs/carmod-0.1.0.jar`
