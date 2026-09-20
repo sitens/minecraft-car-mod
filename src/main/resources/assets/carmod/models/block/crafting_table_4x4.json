@@ -1,8 +1,8 @@
 {
-  "_comment": "Placeholder: reuses vanilla crafting_table textures until real art exists. Swap 'minecraft:block/...' for carmod-namespaced textures later.",
+  "_comment": "Placeholder: reuses vanilla crafting_table textures until real art exists. There is no 'crafting_table_bottom' texture in vanilla -- confirmed by extracting the real 1.21.11 client jar -- vanilla's own crafting table reuses oak_planks for the bottom face, so we do too.",
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "bottom": "minecraft:block/crafting_table_bottom",
+    "bottom": "minecraft:block/oak_planks",
     "top": "minecraft:block/crafting_table_top",
     "side": "minecraft:block/crafting_table_side"
   }
