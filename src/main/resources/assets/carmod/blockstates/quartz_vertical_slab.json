@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "double=false,facing=north": { "model": "carmod:block/quartz_vertical_slab", "uvlock": true },
+    "double=false,facing=east":  { "model": "carmod:block/quartz_vertical_slab", "y": 90,  "uvlock": true },
+    "double=false,facing=south": { "model": "carmod:block/quartz_vertical_slab", "y": 180, "uvlock": true },
+    "double=false,facing=west":  { "model": "carmod:block/quartz_vertical_slab", "y": 270, "uvlock": true },
+    "double=true,facing=north":  { "model": "minecraft:block/quartz_block" },
+    "double=true,facing=east":   { "model": "minecraft:block/quartz_block" },
+    "double=true,facing=south":  { "model": "minecraft:block/quartz_block" },
+    "double=true,facing=west":   { "model": "minecraft:block/quartz_block" }
+  }
+}

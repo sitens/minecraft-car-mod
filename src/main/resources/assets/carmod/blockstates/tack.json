@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=lower": { "model": "carmod:block/tack" },
+    "half=upper": { "model": "carmod:block/tack_top" }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:acacia_slab" },
+  "result": { "id": "carmod:acacia_vertical_slab", "count": 3 }
+}

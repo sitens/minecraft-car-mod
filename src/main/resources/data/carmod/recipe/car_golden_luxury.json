@@ -9,10 +9,10 @@
     "GDDG"
   ],
   "key": {
-    "G": { "item": "minecraft:gold_block" },
-    "D": { "item": "minecraft:diamond" },
-    "N": { "item": "minecraft:netherite_ingot" },
-    "B": { "item": "minecraft:diamond_block" }
+    "G": "minecraft:gold_block",
+    "D": "minecraft:diamond",
+    "N": "minecraft:netherite_ingot",
+    "B": "minecraft:diamond_block"
   },
   "result": {
     "id": "carmod:car_golden_luxury",

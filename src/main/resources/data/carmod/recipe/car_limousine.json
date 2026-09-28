@@ -9,9 +9,9 @@
     "IIII"
   ],
   "key": {
-    "G": { "item": "minecraft:gold_ingot" },
-    "I": { "item": "minecraft:iron_ingot" },
-    "B": { "item": "minecraft:iron_block" }
+    "G": "minecraft:gold_ingot",
+    "I": "minecraft:iron_ingot",
+    "B": "minecraft:iron_block"
   },
   "result": {
     "id": "carmod:car_limousine",

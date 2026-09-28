@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:dark_oak_slab" },
+  "result": { "id": "carmod:dark_oak_vertical_slab", "count": 3 }
+}

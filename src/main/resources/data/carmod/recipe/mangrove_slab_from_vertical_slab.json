@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:mangrove_vertical_slab"],
+  "result": { "id": "minecraft:mangrove_slab", "count": 1 }
+}

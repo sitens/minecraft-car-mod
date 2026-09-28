@@ -8,9 +8,9 @@
     "IIII"
   ],
   "key": {
-    "I": { "item": "minecraft:iron_ingot" },
-    "G": { "item": "minecraft:glass_pane" },
-    "B": { "item": "minecraft:iron_block" }
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:glass_pane",
+    "B": "minecraft:iron_block"
   },
   "result": {
     "id": "carmod:car_offroader",

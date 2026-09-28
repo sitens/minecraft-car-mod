@@ -19,10 +19,17 @@ public final class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.carmod.car_tab"))
                     .icon(() -> new ItemStack(ModItems.CRAFTING_TABLE_4X4.get()))
                     .displayItems((parameters, output) -> {
-                        output.accept(ModBlocks.CRAFTING_TABLE_4X4.get());
+                        output.accept(ModItems.CRAFTING_TABLE_4X4.get());
+                        output.accept(ModItems.CRAFTING_TABLE_5X5.get());
                         for (CarType type : CarType.values()) {
                             output.accept(ModItems.byCarType(type).get());
                         }
+                        output.accept(ModItems.TACK.get());
+                        output.accept(ModItems.WOODEN_BUCKET.get());
+                        output.accept(ModItems.WOODEN_WATER_BUCKET.get());
+                        output.accept(ModItems.WOODEN_LAVA_BUCKET.get());
+                        output.accept(ModItems.HOESAC_SPAWN_EGG.get());
+                        ModItems.verticalSlabItems().values().forEach(item -> output.accept(item.get()));
                     })
                     .build());
 

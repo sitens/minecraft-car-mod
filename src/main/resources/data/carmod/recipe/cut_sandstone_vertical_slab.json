@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:cut_sandstone_slab" },
+  "result": { "id": "carmod:cut_sandstone_vertical_slab", "count": 3 }
+}

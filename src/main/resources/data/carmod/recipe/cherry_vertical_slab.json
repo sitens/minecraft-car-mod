@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:cherry_slab" },
+  "result": { "id": "carmod:cherry_vertical_slab", "count": 3 }
+}

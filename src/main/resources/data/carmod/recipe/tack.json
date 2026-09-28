@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["#", "#"],
+  "key": { "#": "minecraft:iron_ingot" },
+  "result": { "id": "carmod:tack", "count": 5 }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:cut_copper_vertical_slab"],
+  "result": { "id": "minecraft:cut_copper_slab", "count": 1 }
+}

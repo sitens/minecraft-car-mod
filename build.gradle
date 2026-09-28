@@ -30,8 +30,15 @@ neoForge {
             client()
             gameDirectory = project.file('run')
         }
+        // Dev convenience: a client that auto-joins the local test server (run runServer first).
+        clientJoinLocal {
+            client()
+            programArguments.addAll('--quickPlayMultiplayer', '127.0.0.1:25565')
+            gameDirectory = project.file('run')
+        }
         server {
             server()
+            programArgument '--nogui'
             gameDirectory = project.file('run/server')
         }
     }

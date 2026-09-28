@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:deepslate_tile_slab" },
+  "result": { "id": "carmod:deepslate_tile_vertical_slab", "count": 3 }
+}

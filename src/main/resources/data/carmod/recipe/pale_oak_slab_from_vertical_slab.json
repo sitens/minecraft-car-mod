@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:pale_oak_vertical_slab"],
+  "result": { "id": "minecraft:pale_oak_slab", "count": 1 }
+}

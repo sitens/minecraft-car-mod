@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:waxed_exposed_cut_copper_slab" },
+  "result": { "id": "carmod:waxed_exposed_cut_copper_vertical_slab", "count": 3 }
+}

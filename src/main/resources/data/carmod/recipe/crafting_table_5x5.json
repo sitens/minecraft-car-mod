@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["PPPP", "PPPP", "PPPP", "PPPP"],
+  "key": { "P": "#minecraft:planks" },
+  "result": { "id": "carmod:crafting_table_5x5", "count": 1 }
+}

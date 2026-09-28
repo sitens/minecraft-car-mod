@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [" S ", "P P", " P "],
+  "key": { "S": "minecraft:stick", "P": "minecraft:oak_planks" },
+  "result": { "id": "carmod:wooden_bucket", "count": 1 }
+}

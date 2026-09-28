@@ -9,10 +9,10 @@
     "ERRE"
   ],
   "key": {
-    "E": { "item": "minecraft:ender_pearl" },
-    "R": { "item": "minecraft:redstone_block" },
-    "D": { "item": "minecraft:diamond" },
-    "B": { "item": "minecraft:iron_block" }
+    "E": "minecraft:ender_pearl",
+    "R": "minecraft:redstone_block",
+    "D": "minecraft:diamond",
+    "B": "minecraft:iron_block"
   },
   "result": {
     "id": "carmod:car_hover_prototype",

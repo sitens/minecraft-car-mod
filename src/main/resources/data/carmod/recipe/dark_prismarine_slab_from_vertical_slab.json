@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:dark_prismarine_vertical_slab"],
+  "result": { "id": "minecraft:dark_prismarine_slab", "count": 1 }
+}

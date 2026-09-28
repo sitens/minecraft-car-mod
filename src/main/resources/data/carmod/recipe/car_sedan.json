@@ -7,8 +7,8 @@
     "IIII"
   ],
   "key": {
-    "I": { "item": "minecraft:iron_ingot" },
-    "G": { "item": "minecraft:glass_pane" }
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:glass_pane"
   },
   "result": {
     "id": "carmod:car_sedan",

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "double=false,facing=north": { "model": "carmod:block/dark_oak_vertical_slab", "uvlock": true },
+    "double=false,facing=east":  { "model": "carmod:block/dark_oak_vertical_slab", "y": 90,  "uvlock": true },
+    "double=false,facing=south": { "model": "carmod:block/dark_oak_vertical_slab", "y": 180, "uvlock": true },
+    "double=false,facing=west":  { "model": "carmod:block/dark_oak_vertical_slab", "y": 270, "uvlock": true },
+    "double=true,facing=north":  { "model": "minecraft:block/dark_oak_planks" },
+    "double=true,facing=east":   { "model": "minecraft:block/dark_oak_planks" },
+    "double=true,facing=south":  { "model": "minecraft:block/dark_oak_planks" },
+    "double=true,facing=west":   { "model": "minecraft:block/dark_oak_planks" }
+  }
+}

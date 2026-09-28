@@ -1,0 +1,17 @@
+{
+  "textures": { "particle": "carmod:block/tack", "post": "carmod:block/tack" },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 16, 9],
+      "faces": {
+        "down":  { "texture": "#post", "cullface": "down" },
+        "up":    { "texture": "#post" },
+        "north": { "texture": "#post" },
+        "south": { "texture": "#post" },
+        "west":  { "texture": "#post" },
+        "east":  { "texture": "#post" }
+      }
+    }
+  ]
+}

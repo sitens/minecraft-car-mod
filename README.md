@@ -1,12 +1,20 @@
 # Car Mod
 
-NeoForge mod for Minecraft Java Edition **1.21.11**. Adds 10 craftable,
-rideable cars and a "Reinforced Crafting Table" (4x4 grid) required to
-build them. Targeting release on Modrinth.
+NeoForge mod for Minecraft Java Edition **1.21.11**. Targeting release on Modrinth.
 
-Mod id: `carmod` / package `com.kiancars.carmod` — confirmed final.
+Mod id: `carmod` / package `com.kiancars.carmod`.
 
-**[Download the latest build (carmod-0.1.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.1.1)**
+**[Download the latest build (carmod-0.2.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.2.0)**
+
+## What's in it
+
+- **10 cars** you can ride (they drive like boats for now)
+- **4x4 Crafting Table** — 9 planks in a normal crafting table
+- **5x5 Crafting Table** — 16 planks filling the 4x4 table
+- **Standing-up slabs** for every slab in the game (61 of them) — 3 normal slabs stacked in a column make 3 standing slabs. Put one back in the crafting grid to turn it back into a normal slab.
+- **Tacks** — 2 iron ingots stacked make 5 tacks. They're thin and 2 blocks tall. Walking into one does 3 hearts of damage, straight through armor.
+- **Wooden Bucket** — a stick on top, then 3 oak planks in a V under it. Holds water or lava, but it wears out fast, and lava burns it a little every second.
+- **hOesaC** — an orange mob with 7 hearts who doesn't burn in the sun. He only shows up (and only attacks) when you're carrying junk food. If he beats you, he keeps your junk food, and everything else drops like normal. Beat him to get it back.
 
 ## How to test this on your computer
 
@@ -19,7 +27,8 @@ Mod id: `carmod` / package `com.kiancars.carmod` — confirmed final.
 - Press `Windows key + R`
 - Type `%appdata%\.minecraft\mods` and hit Enter
 - If a "mods" folder doesn't exist, make one
-- Drop `carmod-0.1.0.jar` (link above) into that folder
+- **Delete any older `carmod` file** in there
+- Drop `carmod-0.2.0.jar` (link above) into that folder
 
 **3. Launch it**
 - Open the Minecraft Launcher
@@ -28,46 +37,26 @@ Mod id: `carmod` / package `com.kiancars.carmod` — confirmed final.
 
 **4. What to check**
 - Make a new world (Creative mode is easiest)
-- Get 9 wood planks, put them in a crafting grid → should make a bigger crafting table
-- Place that table, right-click it → should open a bigger crafting screen
-- Search "Car Mod" in the creative inventory to grab items/recipes to test
+- Open the creative inventory and find the "Car Mod" tab — everything is there
+- Place the 4x4 and 5x5 tables and right-click them → bigger crafting grids
+- Try crafting a car in the 4x4 table (the recipes are in `src/main/resources/data/carmod/recipe`)
+- Place standing-up slabs; place a second one of the same kind into the empty half to make a full block
+- Place a tack and walk into it (in Survival) → ouch
+- Scoop water or lava with the wooden bucket and watch it wear out
+- Use the hOesaC spawn egg to meet him
 
-**Heads up:** cars won't look like anything yet (no art made yet) — they'll be invisible when placed, but you should still be able to ride them around. That's expected for now, not broken.
+**Heads up:**
+- Cars are invisible when placed (no car art yet), but you can still ride them.
+- hOesaC won't show up on his own yet — the junk food items come in the next update. Use the spawn egg for now.
 
-## Status: builds successfully, not yet run/playtested
+## Coming next
 
-`./gradlew build` succeeds and produces `build/libs/carmod-0.1.0.jar`
-(confirmed against real NeoForge 21.11.45 / MC 1.21.11 artifacts). Known
-gaps before this is genuinely playable:
+Junk food (10 items), the hOesaC Final Boss, the Electronic Bed, Redstone Remote, and Door Inspector.
 
-- Not yet launched in a dev client (`./gradlew runClient`) or playtested —
-  compiling clean doesn't guarantee correct runtime behavior.
-- `CarEntity`'s drop/pick-block item is hardcoded to the Sedan regardless of
-  actual variant — `AbstractBoat`'s drop-item supplier is fixed at
-  construction time and can't legally read the entity's own synced data
-  before `super()` returns. Placement (via `CarItem`) is already
-  variant-correct; only break/pick-block is affected. See the note in
-  `CarEntity.java` and the task in `tasks.md`.
-- No real textures/models/sounds yet — blocks/items reuse vanilla crafting
-  table and boat textures as placeholders; the car entity renderer uses the
-  engine's default fallback (no custom model) since 1.21.11's entity
-  rendering moved to a render-state/`submit()` architecture that this
-  scaffold only stubs (`CarRenderer.createRenderState()`).
-- The 4x4 crafting table screen draws a flat placeholder panel, not a real
-  GUI texture.
+## Known issues
 
-## Design
-
-- **Cars**: one shared `CarEntity` class (boat-style movement, extends
-  `AbstractBoat`) with a `CarType` enum for the 10 variants. Each variant is
-  a separate placement item (`carmod:car_<id>`), mirroring vanilla boats.
-- **Reinforced Crafting Table**: crafted from 9 planks (3x3, like a vanilla
-  crafting table). Opens a custom 16-slot (4x4) grid menu/screen.
-- **Recipes**: plain vanilla shaped recipes — no custom recipe type needed.
-  Every car recipe's pattern is 4 columns wide, so it physically cannot fit
-  in a vanilla 3x3 table or the 2x2 inventory grid; the reinforced table is
-  the only way to craft any of them. Difficulty/material cost climbs from
-  iron (sedan) to netherite+diamond (golden luxury).
+- Breaking a car always gives back a Sedan, no matter which car it was.
+- Placeholder art: the big tables reuse crafting-table textures, the table screens are plain gray, and hOesaC's spawn egg reuses the zombie egg picture.
 
 ## Building
 
@@ -82,6 +71,16 @@ minutes); later builds are fast. If you're behind a TLS-intercepting
 antivirus/proxy (e.g. Avast), Gradle's HTTPS downloads will fail with
 "Plugin ... was not found" or silent timeouts even though a browser works
 fine — import that tool's root CA into your JDK's `cacerts` keystore.
+
+Generated files:
+
+- `java tools/GenTextures.java` redraws the mod's own textures.
+- `bash tools/gen_assets.sh` regenerates the standing-slab, tack, bucket,
+  table and hOesaC JSON files and `en_us.json` (needs the unzipped vanilla
+  client jar; see the top of the script).
+
+Testing: `./gradlew runServer` starts a local test server;
+`./gradlew runClientJoinLocal` opens the game and joins it.
 
 ## License
 

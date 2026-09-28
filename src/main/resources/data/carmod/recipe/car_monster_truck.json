@@ -9,9 +9,9 @@
     "DIID"
   ],
   "key": {
-    "D": { "item": "minecraft:diamond" },
-    "I": { "item": "minecraft:iron_ingot" },
-    "B": { "item": "minecraft:iron_block" }
+    "D": "minecraft:diamond",
+    "I": "minecraft:iron_ingot",
+    "B": "minecraft:iron_block"
   },
   "result": {
     "id": "carmod:car_monster_truck",

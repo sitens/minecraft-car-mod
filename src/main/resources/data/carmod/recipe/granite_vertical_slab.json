@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:granite_slab" },
+  "result": { "id": "carmod:granite_vertical_slab", "count": 3 }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:acacia_vertical_slab"],
+  "result": { "id": "minecraft:acacia_slab", "count": 1 }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:deepslate_tile_vertical_slab"],
+  "result": { "id": "minecraft:deepslate_tile_slab", "count": 1 }
+}

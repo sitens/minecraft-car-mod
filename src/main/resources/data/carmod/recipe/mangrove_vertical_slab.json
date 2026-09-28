@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:mangrove_slab" },
+  "result": { "id": "carmod:mangrove_vertical_slab", "count": 3 }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["#", "#", "#"],
+  "key": { "#": "minecraft:end_stone_brick_slab" },
+  "result": { "id": "carmod:end_stone_brick_vertical_slab", "count": 3 }
+}

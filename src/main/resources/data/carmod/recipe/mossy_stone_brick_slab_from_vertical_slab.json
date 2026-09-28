@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:mossy_stone_brick_vertical_slab"],
+  "result": { "id": "minecraft:mossy_stone_brick_slab", "count": 1 }
+}

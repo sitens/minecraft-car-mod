@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:stone_vertical_slab"],
+  "result": { "id": "minecraft:stone_slab", "count": 1 }
+}

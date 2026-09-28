@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:tuff_brick_vertical_slab"],
+  "result": { "id": "minecraft:tuff_brick_slab", "count": 1 }
+}

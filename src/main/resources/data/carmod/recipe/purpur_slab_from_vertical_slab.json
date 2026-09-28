@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": ["carmod:purpur_vertical_slab"],
+  "result": { "id": "minecraft:purpur_slab", "count": 1 }
+}
