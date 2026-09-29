@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBC"],
+  "key": { "A": "minecraft:stick", "B": "minecraft:sugar", "C": "minecraft:red_dye" },
+  "result": { "id": "carmod:lollipop", "count": 1 }
+}

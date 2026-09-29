@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBA"],
+  "key": { "A": "minecraft:slime_ball", "B": "minecraft:sugar" },
+  "result": { "id": "carmod:gummy_worms", "count": 1 }
+}

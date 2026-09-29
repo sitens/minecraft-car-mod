@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBC"],
+  "key": { "A": "minecraft:paper", "B": "minecraft:potato", "C": "minecraft:red_dye" },
+  "result": { "id": "carmod:layz_bbq", "count": 1 }
+}

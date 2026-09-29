@@ -297,6 +297,8 @@ for item in tack wooden_bucket wooden_water_bucket wooden_lava_bucket hoesac_spa
 EOF
 done
 
+# Only the bottom half drops a tack. Breaking either half also removes the
+# other one, and without this check both halves dropped (2 tacks).
 cat > "$D/loot_table/blocks/tack.json" <<'EOF'
 {
   "type": "minecraft:block",
@@ -305,7 +307,14 @@ cat > "$D/loot_table/blocks/tack.json" <<'EOF'
       "rolls": 1,
       "bonus_rolls": 0,
       "entries": [ { "type": "minecraft:item", "name": "carmod:tack" } ],
-      "conditions": [ { "condition": "minecraft:survives_explosion" } ]
+      "conditions": [
+        { "condition": "minecraft:survives_explosion" },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "carmod:tack",
+          "properties": { "half": "lower" }
+        }
+      ]
     }
   ]
 }
@@ -366,10 +375,65 @@ cat > "$D/loot_table/entities/hoesac.json" <<'EOF'
   ]
 }
 EOF
-# Junk food items arrive in the next batch; the tag stays empty until then.
-cat > "$D/tags/item/junk_food.json" <<'EOF'
+# ---------------------------------------------------------------- junk food
+# name|Display Name|recipe row (4 items, left to right)
+JUNK_FOODS="
+dorinos|Dorinos|minecraft:paper minecraft:wheat minecraft:wheat minecraft:orange_dye
+fritoz|Fritoz|minecraft:paper minecraft:wheat minecraft:wheat minecraft:wheat
+layz|Layz Chips|minecraft:paper minecraft:potato minecraft:potato minecraft:potato
+layz_bbq|Layz BBQ Chips|minecraft:paper minecraft:potato minecraft:potato minecraft:red_dye
+candy_bar|Candy Bar|minecraft:paper minecraft:cocoa_beans minecraft:sugar minecraft:cocoa_beans
+soda|Soda|minecraft:glass_bottle minecraft:sugar minecraft:sugar minecraft:red_dye
+gummy_worms|Gummy Worms|minecraft:slime_ball minecraft:sugar minecraft:sugar minecraft:slime_ball
+donut|Donut|minecraft:wheat minecraft:egg minecraft:sugar minecraft:pink_dye
+lollipop|Lollipop|minecraft:stick minecraft:sugar minecraft:sugar minecraft:red_dye
+popcorn|Popcorn|minecraft:bowl minecraft:wheat minecraft:wheat minecraft:wheat
+"
+JUNK_TAG=""
+LANG_JUNK=""
+while IFS='|' read -r id display row; do
+  [[ -z "$id" ]] && continue
+  read -r i1 i2 i3 i4 <<< "$row"
+  # One letter per distinct ingredient, in the order they appear.
+  keys=""; pattern=""; declare -A letter=(); next=0; letters=(A B C D)
+  for ing in $i1 $i2 $i3 $i4; do
+    if [[ -z "${letter[$ing]:-}" ]]; then
+      letter[$ing]=${letters[$next]}; next=$((next + 1))
+      keys="$keys\"${letter[$ing]}\": \"$ing\", "
+    fi
+    pattern="$pattern${letter[$ing]}"
+  done
+  unset letter
+  cat > "$D/recipe/$id.json" <<EOF
 {
-  "values": []
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["$pattern"],
+  "key": { ${keys%, } },
+  "result": { "id": "carmod:$id", "count": 1 }
+}
+EOF
+  cat > "$A/models/item/$id.json" <<EOF
+{
+  "parent": "minecraft:item/generated",
+  "textures": { "layer0": "carmod:item/$id" }
+}
+EOF
+  cat > "$A/items/$id.json" <<EOF
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "carmod:item/$id"
+  }
+}
+EOF
+  JUNK_TAG="$JUNK_TAG\"carmod:$id\","
+  LANG_JUNK="$LANG_JUNK  \"item.carmod.$id\": \"$display\",\n"
+done <<< "$JUNK_FOODS"
+
+cat > "$D/tags/item/junk_food.json" <<EOF
+{
+  "values": [${JUNK_TAG%,}]
 }
 EOF
 
@@ -415,6 +479,7 @@ EOF
   "death.attack.carmod.tack": "%1$s stepped on a tack",
   "death.attack.carmod.tack.player": "%1$s stepped on a tack while fighting %2$s",
 EOF
+  printf "%b" "$LANG_JUNK"
   printf "%b" "$LANG_SLABS" | sed '$ s/,$//'
   echo "}"
 } > "$A/lang/en_us.json"

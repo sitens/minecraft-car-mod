@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBB"],
+  "key": { "A": "minecraft:paper", "B": "minecraft:wheat" },
+  "result": { "id": "carmod:fritoz", "count": 1 }
+}

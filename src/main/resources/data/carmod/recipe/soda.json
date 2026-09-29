@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBC"],
+  "key": { "A": "minecraft:glass_bottle", "B": "minecraft:sugar", "C": "minecraft:red_dye" },
+  "result": { "id": "carmod:soda", "count": 1 }
+}

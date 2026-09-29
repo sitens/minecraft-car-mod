@@ -4,18 +4,25 @@ import com.kiancars.carmod.CarMod;
 import com.kiancars.carmod.entity.CarType;
 import com.kiancars.carmod.item.CarItem;
 import com.kiancars.carmod.item.WoodenBucketItem;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 
 /**
  * Items must be created with their registry name already set in this
@@ -27,6 +34,48 @@ public final class ModItems {
 
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(CarMod.MOD_ID);
+
+    // ---------------------------------------------------------------- junk food
+    // Every junk food fills 2.5 hunger bars (5 points). All 10 are in the
+    // carmod:junk_food item tag, which is what attracts hOesaC.
+
+    private static final FoodProperties JUNK_FOOD = new FoodProperties.Builder()
+            .nutrition(5)
+            .saturationModifier(0.3F)
+            .build();
+
+    private static final List<DeferredItem<Item>> JUNK_FOODS = new ArrayList<>();
+
+    public static final DeferredItem<Item> DORINOS = junkFood("dorinos", props -> props);
+    public static final DeferredItem<Item> LAYZ = junkFood("layz", props -> props);
+    public static final DeferredItem<Item> FRITOZ = junkFood("fritoz", props -> props);
+    public static final DeferredItem<Item> LAYZ_BBQ = junkFood("layz_bbq", props -> props);
+    public static final DeferredItem<Item> CANDY_BAR = junkFood("candy_bar", props -> props);
+    public static final DeferredItem<Item> GUMMY_WORMS = junkFood("gummy_worms", props -> props);
+    public static final DeferredItem<Item> DONUT = junkFood("donut", props -> props);
+    public static final DeferredItem<Item> LOLLIPOP = junkFood("lollipop", props -> props);
+
+    public static final DeferredItem<Item> SODA =
+            registerJunkFood("soda", props -> props.food(JUNK_FOOD, Consumables.DEFAULT_DRINK)
+                    .usingConvertsTo(Items.GLASS_BOTTLE).stacksTo(16));
+
+    public static final DeferredItem<Item> POPCORN =
+            registerJunkFood("popcorn", props -> props.food(JUNK_FOOD)
+                    .usingConvertsTo(Items.BOWL).stacksTo(16));
+
+    private static DeferredItem<Item> junkFood(String name, UnaryOperator<Item.Properties> extra) {
+        return registerJunkFood(name, props -> extra.apply(props.food(JUNK_FOOD)));
+    }
+
+    private static DeferredItem<Item> registerJunkFood(String name, UnaryOperator<Item.Properties> props) {
+        DeferredItem<Item> item = ITEMS.registerItem(name, Item::new, props);
+        JUNK_FOODS.add(item);
+        return item;
+    }
+
+    public static List<DeferredItem<Item>> junkFoods() {
+        return Collections.unmodifiableList(JUNK_FOODS);
+    }
 
     public static final DeferredItem<BlockItem> CRAFTING_TABLE_4X4 =
             ITEMS.registerSimpleBlockItem("crafting_table_4x4", ModBlocks.CRAFTING_TABLE_4X4);

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBB"],
+  "key": { "A": "minecraft:bowl", "B": "minecraft:wheat" },
+  "result": { "id": "carmod:popcorn", "count": 1 }
+}

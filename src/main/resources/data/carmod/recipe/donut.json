@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABCD"],
+  "key": { "A": "minecraft:wheat", "B": "minecraft:egg", "C": "minecraft:sugar", "D": "minecraft:pink_dye" },
+  "result": { "id": "carmod:donut", "count": 1 }
+}

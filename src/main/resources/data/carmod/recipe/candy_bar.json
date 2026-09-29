@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABCB"],
+  "key": { "A": "minecraft:paper", "B": "minecraft:cocoa_beans", "C": "minecraft:sugar" },
+  "result": { "id": "carmod:candy_bar", "count": 1 }
+}

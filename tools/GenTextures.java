@@ -23,7 +23,153 @@ public class GenTextures {
         woodenBucket("wooden_bucket", 0);
         woodenBucket("wooden_water_bucket", 0xFF3F76E4);
         woodenBucket("wooden_lava_bucket", 0xFFE8641A);
+        chipBag("dorinos", 0xFFC8202A, 0xFF1A1A1A, 0xFFF08A1E, true);
+        chipBag("fritoz", 0xFF2B6FD1, 0xFFF7D02C, 0xFFD9A441, false);
+        chipBag("layz", 0xFFF7D02C, 0xFFD8262C, 0xFFF3D78A, false);
+        chipBag("layz_bbq", 0xFF7A1F1F, 0xFFF7D02C, 0xFFB5652B, false);
+        candyBar();
+        soda();
+        gummyWorms();
+        donut();
+        lollipop();
+        popcorn();
         System.out.println("textures written");
+    }
+
+    // ------------------------------------------------------------- junk food
+
+    static void chipBag(String name, int bag, int stripe, int chip, boolean triangleChip) throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        int outline = shift(bag, -70);
+        for (int y = 2; y <= 13; y++) {
+            for (int x = 3; x <= 12; x++) {
+                boolean edge = x == 3 || x == 12;
+                set(img, x, y, edge ? outline : (x < 6 ? shift(bag, 25) : bag));
+            }
+        }
+        for (int x = 3; x <= 12; x++) {                 // crimped top and bottom
+            set(img, x, x % 2 == 0 ? 1 : 2, outline);
+            set(img, x, x % 2 == 0 ? 14 : 13, outline);
+        }
+        rect(img, 4, 4, 8, 2, stripe);                  // brand stripe
+        if (triangleChip) {
+            for (int row = 0; row < 5; row++) {
+                for (int x = 8 - row; x <= 8 + row - 1; x++) {
+                    set(img, x, 7 + row, (x + row) % 3 == 0 ? shift(chip, -40) : chip);
+                }
+            }
+        } else {
+            for (int y = 7; y <= 11; y++) {
+                for (int x = 5; x <= 10; x++) {
+                    double dx = x - 7.5, dy = y - 9;
+                    if (dx * dx / 7.0 + dy * dy / 5.0 <= 1.0) {
+                        set(img, x, y, (x * y) % 5 == 0 ? shift(chip, -35) : chip);
+                    }
+                }
+            }
+        }
+        save(img, "item/" + name + ".png");
+    }
+
+    static void candyBar() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        rect(img, 1, 5, 14, 6, 0xFF6B3A1E);             // chocolate
+        rect(img, 1, 5, 14, 1, 0xFF8A5230);
+        rect(img, 4, 5, 8, 6, 0xFF2D6CC9);              // blue wrapper in the middle
+        rect(img, 5, 7, 6, 2, 0xFFF2F2F2);              // label
+        for (int y = 5; y <= 10; y++) {                 // twisted wrapper ends
+            set(img, 0, y, y % 2 == 0 ? 0xFFB8B8B8 : 0xFF8A8A8A);
+            set(img, 15, y, y % 2 == 0 ? 0xFFB8B8B8 : 0xFF8A8A8A);
+        }
+        save(img, "item/candy_bar.png");
+    }
+
+    static void soda() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        rect(img, 5, 3, 6, 11, 0xFFC8202A);             // can
+        rect(img, 5, 3, 1, 11, 0xFFE8505A);             // shine
+        rect(img, 10, 3, 1, 11, 0xFF8A1018);            // shadow
+        rect(img, 5, 7, 6, 2, 0xFFF2F2F2);              // white wave
+        rect(img, 6, 2, 4, 1, 0xFFB8B8B8);              // silver lid
+        rect(img, 5, 14, 6, 1, 0xFF9A9A9A);             // silver bottom
+        set(img, 8, 1, 0xFF8A8A8A);                     // pull tab
+        save(img, "item/soda.png");
+    }
+
+    static void gummyWorms() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        int[][] colors = {{0xFFFF5A5A, 0xFFFFD84A}, {0xFF4AD26A, 0xFFFF8C3A}, {0xFF5AA0FF, 0xFFFF6AD5}};
+        for (int w = 0; w < 3; w++) {
+            int baseY = 3 + w * 4;
+            for (int x = 2; x <= 13; x++) {
+                int y = baseY + (int) Math.round(Math.sin(x * 0.8 + w) * 1.2);
+                int c = x < 8 ? colors[w][0] : colors[w][1];
+                set(img, x, y, c);
+                set(img, x, y + 1, shift(c, -40));
+            }
+        }
+        save(img, "item/gummy_worms.png");
+    }
+
+    static void donut() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        int[] sprinkles = {0xFFFFFFFF, 0xFF4AD2FF, 0xFFFFE04A, 0xFF7AE07A};
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
+                double d = Math.hypot(x - 7.5, y - 7.5);
+                if (d <= 6.8 && d >= 2.2) {
+                    boolean icing = d <= 5.6 && y <= 11;
+                    int c = icing ? 0xFFF58AC4 : 0xFFD9A05B;
+                    if (icing && (x * 7 + y * 3) % 11 == 0) {
+                        c = sprinkles[(x + y) % sprinkles.length];
+                    }
+                    set(img, x, y, c);
+                }
+            }
+        }
+        save(img, "item/donut.png");
+    }
+
+    static void lollipop() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 9; y <= 15; y++) {                 // stick
+            set(img, 8, y, 0xFFF2F2F2);
+        }
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
+                double dx = x - 7.5, dy = y - 5.0;
+                double d = Math.hypot(dx, dy);
+                if (d <= 4.8) {
+                    double angle = Math.atan2(dy, dx) + d * 0.9;   // swirl
+                    boolean red = Math.sin(angle * 2) > 0;
+                    set(img, x, y, red ? 0xFFE0303A : 0xFFFFF2F2);
+                }
+            }
+        }
+        save(img, "item/lollipop.png");
+    }
+
+    static void popcorn() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Random rnd = new Random(7);
+        for (int y = 9; y <= 14; y++) {                 // bowl
+            int inset = (y - 9) / 2;
+            for (int x = 2 + inset; x <= 13 - inset; x++) {
+                set(img, x, y, y == 9 ? 0xFF5A3A1E : 0xFF8A5A30);
+            }
+        }
+        for (int y = 3; y <= 8; y++) {                  // heap of puffy kernels
+            int halfWidth = 2 + (y - 3);
+            for (int x = 8 - halfWidth; x <= 7 + halfWidth; x++) {
+                if (x < 2 || x > 13) {
+                    continue;
+                }
+                int roll = rnd.nextInt(10);
+                int c = roll < 2 ? 0xFFF2D36A : roll < 4 ? 0xFFE8DDBF : 0xFFFFFBEA;
+                set(img, x, y, c);
+            }
+        }
+        save(img, "item/popcorn.png");
     }
 
     // ---------------------------------------------------------------- hOesaC
