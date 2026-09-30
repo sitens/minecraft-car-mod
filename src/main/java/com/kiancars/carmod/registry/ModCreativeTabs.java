@@ -29,6 +29,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.WOODEN_WATER_BUCKET.get());
                         output.accept(ModItems.WOODEN_LAVA_BUCKET.get());
                         output.accept(ModItems.HOESAC_SPAWN_EGG.get());
+                        output.accept(ModItems.HOESAC_BOSS_SPAWN_EGG.get());
                         ModItems.junkFoods().forEach(item -> output.accept(item.get()));
                         ModItems.verticalSlabItems().values().forEach(item -> output.accept(item.get()));
                     })

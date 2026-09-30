@@ -18,6 +18,7 @@ public class GenTextures {
 
     public static void main(String[] args) throws IOException {
         hoesac();
+        hoesacBoss();
         tackItem();
         tackBlock();
         woodenBucket("wooden_bucket", 0);
@@ -202,6 +203,53 @@ public class GenTextures {
         set(img, 10, 14, 0xFFFFFFFF);         // teeth
         set(img, 13, 14, 0xFFFFFFFF);
         save(img, "entity/hoesac.png");
+    }
+
+    // ------------------------------------------------------------ final boss
+
+    static void hoesacBoss() throws IOException {
+        BufferedImage img = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
+        Random rnd = new Random(1337);
+        int orange = 0xFFE8841A;
+        int purple = 0xFF7B2FBE;
+
+        // Everything starts as chunky orange "cheese dust" so any face of any box looks right.
+        for (int y = 0; y < 128; y += 2) {
+            for (int x = 0; x < 128; x += 2) {
+                int c = shift(orange, rnd.nextInt(41) - 20);
+                rect(img, x, y, 2, 2, c);
+            }
+        }
+        // Purple shirt stripes across the belly (body sides at v 56..74, front at x 26..52).
+        for (int y = 56; y < 74; y += 6) {
+            for (int x = 0; x < 104; x += 2) {
+                rect(img, x, y, 2, 3, shift(purple, rnd.nextInt(25) - 12));
+            }
+        }
+        // Crumbs and stains scattered on the body.
+        for (int i = 0; i < 70; i++) {
+            set(img, rnd.nextInt(104), 30 + rnd.nextInt(44), i % 3 == 0 ? 0xFFF7D02C : 0xFFB5501A);
+        }
+        // A big cheesy triangle on the belly front.
+        for (int row = 0; row < 10; row++) {
+            for (int x = 39 - row; x <= 39 + row; x++) {
+                set(img, x, 58 + row, row % 3 == 0 ? 0xFFF7D02C : 0xFFF2A21E);
+            }
+        }
+
+        // Head front is (12,12)-(24,21): a big grumpy face.
+        rect(img, 13, 14, 3, 1, 0xFF3A1A00);              // angry eyebrows
+        rect(img, 20, 14, 3, 1, 0xFF3A1A00);
+        rect(img, 13, 15, 3, 3, 0xFFFFFFFF);              // eyes
+        rect(img, 20, 15, 3, 3, 0xFFFFFFFF);
+        rect(img, 14, 16, 2, 2, 0xFFC8202A);              // red pupils
+        rect(img, 20, 16, 2, 2, 0xFFC8202A);
+        rect(img, 14, 18, 8, 3, 0xFF5A0F0F);              // huge open mouth
+        for (int x = 14; x < 22; x += 2) {                // teeth
+            set(img, x, 18, 0xFFFFFFFF);
+            set(img, x + 1, 20, 0xFFFFFFFF);
+        }
+        save(img, "entity/hoesac_final_boss.png");
     }
 
     // ------------------------------------------------------------------ tack

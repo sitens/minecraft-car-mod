@@ -280,13 +280,15 @@ for item in tack wooden_bucket wooden_water_bucket wooden_lava_bucket; do
 }
 EOF
 done
-cat > "$A/models/item/hoesac_spawn_egg.json" <<'EOF'
+for egg in hoesac_spawn_egg hoesac_final_boss_spawn_egg; do
+cat > "$A/models/item/$egg.json" <<'EOF'
 {
   "parent": "minecraft:item/generated",
   "textures": { "layer0": "minecraft:item/zombie_spawn_egg" }
 }
 EOF
-for item in tack wooden_bucket wooden_water_bucket wooden_lava_bucket hoesac_spawn_egg; do
+done
+for item in tack wooden_bucket wooden_water_bucket wooden_lava_bucket hoesac_spawn_egg hoesac_final_boss_spawn_egg; do
   cat > "$A/items/$item.json" <<EOF
 {
   "model": {
@@ -345,11 +347,25 @@ cat > "$D/damage_type/tack.json" <<'EOF'
   "scaling": "never"
 }
 EOF
+cat > "$D/damage_type/hoesac_roll.json" <<'EOF'
+{
+  "message_id": "carmod.hoesac_roll",
+  "exhaustion": 0.0,
+  "scaling": "never"
+}
+EOF
+cat > "$D/damage_type/hoesac_suffocate.json" <<'EOF'
+{
+  "message_id": "carmod.hoesac_suffocate",
+  "exhaustion": 0.0,
+  "scaling": "never"
+}
+EOF
 for tag in bypasses_armor bypasses_effects bypasses_enchantments bypasses_resistance; do
   cat > "$RES/data/minecraft/tags/damage_type/$tag.json" <<'EOF'
 {
   "replace": false,
-  "values": ["carmod:tack"]
+  "values": ["carmod:tack", "carmod:hoesac_roll", "carmod:hoesac_suffocate"]
 }
 EOF
 done
@@ -476,6 +492,12 @@ EOF
   "item.carmod.wooden_lava_bucket": "Wooden Lava Bucket",
   "entity.carmod.hoesac": "hOesaC",
   "item.carmod.hoesac_spawn_egg": "hOesaC Spawn Egg",
+  "entity.carmod.hoesac_final_boss": "hOesaC Final Boss",
+  "item.carmod.hoesac_final_boss_spawn_egg": "hOesaC Final Boss Spawn Egg",
+  "death.attack.carmod.hoesac_suffocate": "%1$s got suffocated",
+  "death.attack.carmod.hoesac_suffocate.player": "%1$s got suffocated by %2$s",
+  "death.attack.carmod.hoesac_roll": "%1$s was flattened",
+  "death.attack.carmod.hoesac_roll.player": "%1$s was flattened by %2$s",
   "death.attack.carmod.tack": "%1$s stepped on a tack",
   "death.attack.carmod.tack.player": "%1$s stepped on a tack while fighting %2$s",
 EOF

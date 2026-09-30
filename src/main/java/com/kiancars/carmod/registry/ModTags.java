@@ -19,6 +19,12 @@ public final class ModTags {
     public static final ResourceKey<DamageType> TACK_DAMAGE =
             ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(CarMod.MOD_ID, "tack"));
 
+    public static final ResourceKey<DamageType> HOESAC_ROLL =
+            ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(CarMod.MOD_ID, "hoesac_roll"));
+
+    public static final ResourceKey<DamageType> HOESAC_SUFFOCATE =
+            ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(CarMod.MOD_ID, "hoesac_suffocate"));
+
     public static boolean isCarryingJunkFood(LivingEntity entity) {
         return entity instanceof Player player && player.getInventory().contains(JUNK_FOOD);
     }

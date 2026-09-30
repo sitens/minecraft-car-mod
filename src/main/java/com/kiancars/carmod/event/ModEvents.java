@@ -1,5 +1,6 @@
 package com.kiancars.carmod.event;
 
+import com.kiancars.carmod.entity.HoesacBossEntity;
 import com.kiancars.carmod.entity.HoesacEntity;
 import com.kiancars.carmod.registry.ModEntities;
 import com.kiancars.carmod.registry.ModTags;
@@ -29,6 +30,7 @@ public final class ModEvents {
 
     public static void onAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.HOESAC.get(), HoesacEntity.createAttributes().build());
+        event.put(ModEntities.HOESAC_BOSS.get(), HoesacBossEntity.createAttributes().build());
     }
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {

@@ -103,6 +103,10 @@ public final class ModItems {
             ITEMS.registerItem("hoesac_spawn_egg", SpawnEggItem::new,
                     props -> props.spawnEgg(ModEntities.HOESAC.get()));
 
+    public static final DeferredItem<SpawnEggItem> HOESAC_BOSS_SPAWN_EGG =
+            ITEMS.registerItem("hoesac_final_boss_spawn_egg", SpawnEggItem::new,
+                    props -> props.spawnEgg(ModEntities.HOESAC_BOSS.get()));
+
     private static final Map<CarType, DeferredItem<CarItem>> CAR_ITEMS = new EnumMap<>(CarType.class);
     private static final Map<String, DeferredItem<BlockItem>> VERTICAL_SLAB_ITEMS = new LinkedHashMap<>();
 

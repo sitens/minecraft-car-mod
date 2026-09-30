@@ -1,5 +1,6 @@
 package com.kiancars.carmod.block;
 
+import com.kiancars.carmod.entity.HoesacBossEntity;
 import com.kiancars.carmod.registry.ModTags;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -29,6 +30,8 @@ public class TackBlock extends DoublePlantBlock {
 
     /** 3 hearts. */
     public static final float DAMAGE = 6.0F;
+    /** 2 hearts, for the Final Boss. */
+    public static final float BOSS_DAMAGE = 4.0F;
     private static final long HIT_COOLDOWN_TICKS = 20;
     private static final String LAST_HIT_KEY = "carmod_last_tack_hit";
 
@@ -67,6 +70,11 @@ public class TackBlock extends DoublePlantBlock {
             return;
         }
         living.getPersistentData().putLong(LAST_HIT_KEY, now);
+        if (living instanceof HoesacBossEntity boss) {
+            boss.hurtServer(serverLevel, serverLevel.damageSources().source(ModTags.TACK_DAMAGE), BOSS_DAMAGE);
+            boss.onTackHit(pos.getCenter());
+            return;
+        }
         living.hurtServer(serverLevel, serverLevel.damageSources().source(ModTags.TACK_DAMAGE), DAMAGE);
     }
 }

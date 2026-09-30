@@ -2,6 +2,7 @@ package com.kiancars.carmod.registry;
 
 import com.kiancars.carmod.CarMod;
 import com.kiancars.carmod.entity.CarEntity;
+import com.kiancars.carmod.entity.HoesacBossEntity;
 import com.kiancars.carmod.entity.HoesacEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -30,6 +31,15 @@ public final class ModEntities {
                     .clientTrackingRange(8)
                     .notInPeaceful()
                     .build(key("hoesac")));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<HoesacBossEntity>> HOESAC_BOSS =
+            ENTITY_TYPES.register("hoesac_final_boss", () -> EntityType.Builder.<HoesacBossEntity>of(HoesacBossEntity::new, MobCategory.MONSTER)
+                    .sized(16.0F, 16.0F)
+                    .eyeHeight(13.0F)
+                    .clientTrackingRange(16)
+                    .updateInterval(2)
+                    .notInPeaceful()
+                    .build(key("hoesac_final_boss")));
 
     private static ResourceKey<EntityType<?>> key(String name) {
         return ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(CarMod.MOD_ID, name));

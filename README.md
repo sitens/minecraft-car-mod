@@ -4,11 +4,17 @@ NeoForge mod for Minecraft Java Edition **1.21.11**. Targeting release on Modrin
 
 Mod id: `carmod` / package `com.kiancars.carmod`.
 
-**[Download the latest build (carmod-0.3.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.3.0)**
+**[Download the latest build (carmod-0.4.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.4.0)**
 
 ## Changelog
 
 Newest first. Each version says what's new, what got fixed, and what changed.
+
+### v0.4.0 — 2026-09-30
+- **New:** The **hOesaC Final Boss**: 25 hearts, a purple boss bar, and a giant round body (16 blocks wide, tall, and deep) with tiny arms and legs and a medium-size head. Get him with his spawn egg for now.
+- **New:** His roll attack (charges at you, 2 hearts through armor and effects) and his jump-and-land attack (7 hearts, "[name] got suffocated by hOesaC Final Boss").
+- **New:** Tacks stop his roll. He bounces off them, loses 2 hearts each time, then tries again.
+- **Heads up:** His attacks are brand new and haven't been tested against a real player yet. Try him in a big, flat, open area.
 
 ### v0.3.0 — 2026-09-29
 - **New:** 10 junk foods (Dorinos, Fritoz, Layz Chips, Layz BBQ Chips, Candy Bar, Soda, Gummy Worms, Donut, Lollipop, Popcorn). Each fills 2½ hunger bars.
@@ -54,6 +60,7 @@ Newest first. Each version says what's new, what got fixed, and what changed.
   | Lollipop | Stick, Sugar, Sugar, Red Dye |
   | Popcorn | Bowl, Wheat, Wheat, Wheat (you get the bowl back) |
 - **Wooden Bucket** — a stick on top, then 3 oak planks in a V under it. Holds water or lava, but it wears out fast, and lava burns it a little every second.
+- **hOesaC Final Boss** — a giant round boss with 25 hearts and a purple health bar at the top of your screen. He rolls at you (2 hearts through armor) and jumps up to land on you (suffocation, 7 hearts). Tacks stop his roll: he bounces off them and loses 2 hearts each time. How to summon him in a real game is still being decided, so use his spawn egg in the Car Mod tab.
 - **hOesaC** — an orange mob with 7 hearts who doesn't burn in the sun. He only shows up (and only attacks) when you're carrying junk food. If he beats you, he keeps your junk food, and everything else drops like normal. Beat him to get it back.
 
 ## How to test this on your computer
@@ -68,7 +75,7 @@ Newest first. Each version says what's new, what got fixed, and what changed.
 - Type `%appdata%\.minecraft\mods` and hit Enter
 - If a "mods" folder doesn't exist, make one
 - **Delete any older `carmod` file** in there
-- Drop `carmod-0.3.0.jar` (link above) into that folder
+- Drop `carmod-0.4.0.jar` (link above) into that folder
 
 **3. Launch it**
 - Open the Minecraft Launcher
@@ -86,12 +93,13 @@ Newest first. Each version says what's new, what got fixed, and what changed.
 - Drive a car on land (fast) and on water (slow)
 - In Survival, carry some junk food and wait — hOesaC should show up within a minute or two (not in Peaceful)
 - Or use the hOesaC spawn egg to meet him right away
+- For the Final Boss: go to a big, flat, open area (he is 16 blocks wide!), use the hOesaC Final Boss Spawn Egg, and try tacks around yourself
 
 **Heads up:** cars are invisible when placed (no car art yet), but you can still ride them.
 
 ## Coming next
 
-Car textures, the hOesaC Final Boss, the Electronic Bed, Redstone Remote, and Door Inspector.
+The Electronic Bed, Redstone Remote, and Door Inspector (recipes are approved), how to summon the Final Boss, and car textures.
 
 ## Known issues
 

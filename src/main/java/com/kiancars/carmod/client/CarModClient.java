@@ -1,7 +1,9 @@
 package com.kiancars.carmod.client;
 
 import com.kiancars.carmod.CarMod;
+import com.kiancars.carmod.client.model.HoesacBossModel;
 import com.kiancars.carmod.client.renderer.CarRenderer;
+import com.kiancars.carmod.client.renderer.HoesacBossRenderer;
 import com.kiancars.carmod.client.renderer.HoesacRenderer;
 import com.kiancars.carmod.client.screen.BigCraftingScreen;
 import com.kiancars.carmod.registry.ModEntities;
@@ -22,6 +24,12 @@ public final class CarModClient {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.CAR.get(), CarRenderer::new);
         event.<Zombie>registerEntityRenderer(ModEntities.HOESAC.get(), HoesacRenderer::new);
+        event.registerEntityRenderer(ModEntities.HOESAC_BOSS.get(), HoesacBossRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(HoesacBossModel.LAYER, HoesacBossModel::createLayer);
     }
 
     @SubscribeEvent
