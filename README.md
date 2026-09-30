@@ -6,6 +6,32 @@ Mod id: `carmod` / package `com.kiancars.carmod`.
 
 **[Download the latest build (carmod-0.3.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.3.0)**
 
+## Changelog
+
+Newest first. Each version says what's new, what got fixed, and what changed.
+
+### v0.3.0 — 2026-09-29
+- **New:** 10 junk foods (Dorinos, Fritoz, Layz Chips, Layz BBQ Chips, Candy Bar, Soda, Gummy Worms, Donut, Lollipop, Popcorn). Each fills 2½ hunger bars.
+- **New:** hOesaC now shows up by himself when you carry junk food in Survival.
+- **Fixed:** Tacks dropped 2 when broken. Now they drop 1.
+- **Changed:** Cars are fast on land and slow on water (it was the other way around).
+- **Changed:** Cars can drive up 1-block bumps without getting stuck.
+
+### v0.2.0 — 2026-09-27
+- **Fixed:** The game crashed on startup. That's fixed now.
+- **Fixed:** None of the car recipes worked. They all work now.
+- **New:** 5x5 Crafting Table (16 planks in the 4x4 table).
+- **New:** Standing-up slabs for all 61 kinds of slabs.
+- **New:** Tacks (3 hearts of damage, even through armor).
+- **New:** Wooden Bucket (holds water or lava, wears out fast).
+- **New:** hOesaC, a mob with 7 hearts who doesn't burn in the sun (spawn egg only until junk food came in v0.3.0).
+
+### v0.1.1 — 2026-09-20
+- **Fixed:** The game crashed on launch because of missing picture files for the items. (It still crashed on startup for a different reason, which got fixed in v0.2.0.)
+
+### v0.1.0 — 2026-09-19
+- **New:** First test version: 10 cars you can ride, and the 4x4 Crafting Table you need to make them.
+
 ## What's in it
 
 - **10 cars** you can ride — fast on land, slow on water, and they can drive up 1-block bumps
