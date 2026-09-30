@@ -34,9 +34,9 @@ public final class ModEntities {
 
     public static final DeferredHolder<EntityType<?>, EntityType<HoesacBossEntity>> HOESAC_BOSS =
             ENTITY_TYPES.register("hoesac_final_boss", () -> EntityType.Builder.<HoesacBossEntity>of(HoesacBossEntity::new, MobCategory.MONSTER)
-                    .sized(16.0F, 16.0F)
-                    .eyeHeight(13.0F)
-                    .clientTrackingRange(16)
+                    .sized(7.0F, 7.0F)
+                    .eyeHeight(5.6F)
+                    .clientTrackingRange(10)
                     .updateInterval(2)
                     .notInPeaceful()
                     .build(key("hoesac_final_boss")));

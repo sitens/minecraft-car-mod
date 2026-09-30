@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBB"],
+  "key": { "A": "minecraft:stick", "B": "minecraft:sugar" },
+  "result": { "id": "carmod:cotton_candy", "count": 1 }
+}

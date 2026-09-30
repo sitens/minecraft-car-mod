@@ -34,7 +34,132 @@ public class GenTextures {
         donut();
         lollipop();
         popcorn();
+        pizzaSlice();
+        hotDog();
+        iceCream();
+        cottonCandy();
+        cheezyPuffs();
+        canOfBeans();
+        fartingIcon();
         System.out.println("textures written");
+    }
+
+    static void pizzaSlice() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 2; y <= 14; y++) {                 // triangle, point at the bottom
+            int half = (14 - y) * 6 / 12 + 1;
+            for (int x = 8 - half; x <= 7 + half; x++) {
+                boolean crust = y <= 4;
+                set(img, x, y, crust ? 0xFFC98A3C : (Math.abs(x - 8) >= half - 1 ? 0xFFF2C14E : 0xFFF5D85A));
+            }
+        }
+        rect(img, 4, 2, 8, 1, 0xFFA66A25);
+        int[][] pepperoni = {{6, 6}, {9, 7}, {7, 10}, {9, 11}};
+        for (int[] p : pepperoni) {
+            rect(img, p[0], p[1], 2, 2, 0xFFC8301E);
+        }
+        save(img, "item/pizza_slice.png");
+    }
+
+    static void hotDog() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        rect(img, 1, 6, 14, 5, 0xFFD9A05B);             // bun
+        rect(img, 1, 6, 14, 1, 0xFFE8B874);
+        rect(img, 0, 7, 16, 3, 0xFFB5402A);             // sausage sticks out
+        rect(img, 0, 7, 16, 1, 0xFFD25A3C);
+        for (int x = 2; x < 14; x += 2) {               // mustard zigzag
+            set(img, x, 7, 0xFFF7D02C);
+            set(img, x + 1, 8, 0xFFF7D02C);
+        }
+        save(img, "item/hot_dog.png");
+    }
+
+    static void iceCream() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 8; y <= 15; y++) {                 // waffle cone
+            int half = Math.max(0, (15 - y) / 2 + 1);
+            for (int x = 8 - half; x <= 7 + half; x++) {
+                set(img, x, y, (x + y) % 2 == 0 ? 0xFFD9A05B : 0xFFB8803F);
+            }
+        }
+        for (int y = 1; y <= 8; y++) {                  // two scoops
+            for (int x = 3; x <= 12; x++) {
+                double d = Math.hypot(x - 7.5, y < 5 ? (y - 4) * 1.1 : (y - 6.5) * 1.3);
+                if (d <= 4.4) {
+                    set(img, x, y, y < 5 ? 0xFFF58AC4 : 0xFFFFF2D8);
+                }
+            }
+        }
+        set(img, 7, 1, 0xFFC8202A);                     // cherry
+        set(img, 8, 1, 0xFFC8202A);
+        save(img, "item/ice_cream.png");
+    }
+
+    static void cottonCandy() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 9; y <= 15; y++) {                 // paper cone stick
+            set(img, 8, y, 0xFFF2F2F2);
+        }
+        Random rnd = new Random(11);
+        for (int y = 0; y < 11; y++) {                  // fluffy cloud
+            for (int x = 1; x < 15; x++) {
+                double d = Math.hypot((x - 7.5) * 0.8, y - 5.0);
+                if (d <= 5.0 + rnd.nextDouble() * 1.2) {
+                    set(img, x, y, (x + y) % 3 == 0 ? 0xFFFF9AD0 : (x % 2 == 0 ? 0xFFFFC2E2 : 0xFF9AD6FF));
+                }
+            }
+        }
+        save(img, "item/cotton_candy.png");
+    }
+
+    static void cheezyPuffs() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        // A tall tube of puffs.
+        rect(img, 4, 2, 8, 12, 0xFFF0A21E);
+        rect(img, 4, 2, 1, 12, 0xFFFFC24A);
+        rect(img, 11, 2, 1, 12, 0xFFC27A10);
+        rect(img, 3, 1, 10, 2, 0xFFD8D8D8);             // lid
+        rect(img, 5, 6, 6, 3, 0xFFFFFFFF);              // label
+        for (int x = 5; x <= 10; x += 2) {
+            set(img, x, 7, 0xFFC8202A);
+        }
+        save(img, "item/cheezy_puffs.png");
+    }
+
+    static void canOfBeans() throws IOException {
+        BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        rect(img, 4, 3, 8, 11, 0xFFC8A03C);             // tin
+        rect(img, 4, 3, 1, 11, 0xFFE8C860);
+        rect(img, 11, 3, 1, 11, 0xFF8A6A1E);
+        rect(img, 4, 2, 8, 1, 0xFFB8B8B8);              // rim
+        rect(img, 4, 14, 8, 1, 0xFF9A9A9A);
+        rect(img, 4, 6, 8, 5, 0xFF8A3A1E);              // label
+        for (int i = 0; i < 4; i++) {                   // little beans
+            rect(img, 5 + i * 2, 7 + (i % 2) * 2, 2, 1, 0xFFE8B874);
+        }
+        set(img, 8, 1, 0xFF8A8A8A);                     // pull tab
+        save(img, "item/can_of_beans.png");
+    }
+
+    /** 18x18 icon shown on the screen while the effect is active. */
+    static void fartingIcon() throws IOException {
+        BufferedImage img = new BufferedImage(18, 18, BufferedImage.TYPE_INT_ARGB);
+        Random rnd = new Random(5);
+        for (int i = 0; i < 5; i++) {                   // stinky puffs rising
+            int cx = 4 + i * 2 + rnd.nextInt(2);
+            int cy = 13 - i * 2;
+            for (int y = -2; y <= 2; y++) {
+                for (int x = -2; x <= 2; x++) {
+                    if (x * x + y * y <= 4 + rnd.nextInt(2)) {
+                        int px = cx + x, py = cy + y;
+                        if (px >= 0 && px < 18 && py >= 0 && py < 18) {
+                            set(img, px, py, (x + y) % 2 == 0 ? 0xFF9BB33A : 0xFF7A9424);
+                        }
+                    }
+                }
+            }
+        }
+        save(img, "mob_effect/farting.png");
     }
 
     // ------------------------------------------------------------- junk food

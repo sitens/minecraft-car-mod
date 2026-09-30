@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABCA"],
+  "key": { "A": "minecraft:bread", "B": "minecraft:cooked_porkchop", "C": "minecraft:red_mushroom" },
+  "result": { "id": "carmod:pizza_slice", "count": 1 }
+}

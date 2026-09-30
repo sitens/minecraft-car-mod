@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBC"],
+  "key": { "A": "minecraft:snowball", "B": "minecraft:sugar", "C": "minecraft:wheat" },
+  "result": { "id": "carmod:ice_cream", "count": 1 }
+}

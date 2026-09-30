@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "    ",
+    "DTTD",
+    " LL ",
+    "OOOO"
+  ],
+  "key": {
+    "D": "minecraft:diamond",
+    "T": "minecraft:crafting_table",
+    "L": "minecraft:mangrove_log",
+    "O": "minecraft:obsidian"
+  },
+  "result": { "id": "carmod:altar", "count": 4 }
+}

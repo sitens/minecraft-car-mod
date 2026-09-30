@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "food=0": { "model": "carmod:block/altar" },
+    "food=1": { "model": "carmod:block/altar_filled" },
+    "food=2": { "model": "carmod:block/altar_filled" },
+    "food=3": { "model": "carmod:block/altar_filled" },
+    "food=4": { "model": "carmod:block/altar_filled" },
+    "food=5": { "model": "carmod:block/altar_filled" },
+    "food=6": { "model": "carmod:block/altar_filled" },
+    "food=7": { "model": "carmod:block/altar_filled" },
+    "food=8": { "model": "carmod:block/altar_filled" },
+    "food=9": { "model": "carmod:block/altar_filled" },
+    "food=10": { "model": "carmod:block/altar_filled" },
+    "food=11": { "model": "carmod:block/altar_filled" },
+    "food=12": { "model": "carmod:block/altar_filled" },
+    "food=13": { "model": "carmod:block/altar_filled" },
+    "food=14": { "model": "carmod:block/altar_filled" },
+    "food=15": { "model": "carmod:block/altar_filled" }
+  }
+}

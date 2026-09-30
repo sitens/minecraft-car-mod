@@ -31,6 +31,8 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.HOESAC_SPAWN_EGG.get());
                         output.accept(ModItems.HOESAC_BOSS_SPAWN_EGG.get());
                         ModItems.junkFoods().forEach(item -> output.accept(item.get()));
+                        output.accept(ModItems.CAN_OF_BEANS.get());
+                        output.accept(ModItems.ALTAR.get());
                         ModItems.verticalSlabItems().values().forEach(item -> output.accept(item.get()));
                     })
                     .build());

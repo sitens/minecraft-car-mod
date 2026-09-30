@@ -39,8 +39,13 @@ public final class ModItems {
     // Every junk food fills 2.5 hunger bars (5 points). All 10 are in the
     // carmod:junk_food item tag, which is what attracts hOesaC.
 
+    private static final FoodProperties BEANS = new FoodProperties.Builder()
+            .nutrition(6)
+            .saturationModifier(0.3F)
+            .build();
+
     private static final FoodProperties JUNK_FOOD = new FoodProperties.Builder()
-            .nutrition(5)
+            .nutrition(10)
             .saturationModifier(0.3F)
             .build();
 
@@ -62,6 +67,19 @@ public final class ModItems {
     public static final DeferredItem<Item> POPCORN =
             registerJunkFood("popcorn", props -> props.food(JUNK_FOOD)
                     .usingConvertsTo(Items.BOWL).stacksTo(16));
+
+    public static final DeferredItem<Item> PIZZA_SLICE = junkFood("pizza_slice", props -> props);
+    public static final DeferredItem<Item> HOT_DOG = junkFood("hot_dog", props -> props);
+    public static final DeferredItem<Item> ICE_CREAM = junkFood("ice_cream", props -> props);
+    public static final DeferredItem<Item> COTTON_CANDY = junkFood("cotton_candy", props -> props);
+    public static final DeferredItem<Item> CHEEZY_PUFFS = junkFood("cheezy_puffs", props -> props);
+
+    /** 3 hunger bars and the Farting effect (see ModEvents). Not junk food: it doesn't attract hOesaC. */
+    public static final DeferredItem<Item> CAN_OF_BEANS =
+            ITEMS.registerItem("can_of_beans", Item::new, props -> props.food(BEANS).stacksTo(16));
+
+    public static final DeferredItem<BlockItem> ALTAR =
+            ITEMS.registerSimpleBlockItem("altar", ModBlocks.ALTAR);
 
     private static DeferredItem<Item> junkFood(String name, UnaryOperator<Item.Properties> extra) {
         return registerJunkFood(name, props -> extra.apply(props.food(JUNK_FOOD)));

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABCC"],
+  "key": { "A": "minecraft:paper", "B": "minecraft:wheat", "C": "minecraft:yellow_dye" },
+  "result": { "id": "carmod:cheezy_puffs", "count": 1 }
+}

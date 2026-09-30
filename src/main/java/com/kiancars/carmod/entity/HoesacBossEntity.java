@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
 /**
- * hOesaC Final Boss: a 16x16x16 round blob with 25 hearts and a purple boss
+ * hOesaC Final Boss: a 7x7x7 round blob with 100 hearts and a purple boss
  * bar. He doesn't path-find (he's far too big); a tiny state machine steers
  * him straight at his target instead:
  * <ul>
@@ -40,7 +40,7 @@ import org.jspecify.annotations.Nullable;
  */
 public class HoesacBossEntity extends Monster {
 
-    private static final float MAX_HEALTH = 50.0F;      // 25 hearts
+    private static final float MAX_HEALTH = 200.0F;     // 100 hearts
     private static final float ROLL_DAMAGE = 4.0F;      // 2 hearts
     private static final float SLAM_DAMAGE = 14.0F;     // 7 hearts
     private static final float ROLL_MAX_SPEED = 0.85F;
@@ -76,7 +76,7 @@ public class HoesacBossEntity extends Monster {
                 .add(Attributes.MAX_HEALTH, MAX_HEALTH)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
                 .add(Attributes.FOLLOW_RANGE, 64.0)
-                .add(Attributes.STEP_HEIGHT, 4.0)
+                .add(Attributes.STEP_HEIGHT, 2.0)
                 .add(Attributes.ATTACK_DAMAGE, ROLL_DAMAGE);
     }
 
@@ -125,7 +125,7 @@ public class HoesacBossEntity extends Monster {
         this.rollAngleO = this.rollAngle;
         super.tick();
         double moved = Math.hypot(this.getX() - this.xo, this.getZ() - this.zo);
-        this.rollAngle += (float) (moved / 8.0);
+        this.rollAngle += (float) (moved / 3.5);
     }
 
     @Override

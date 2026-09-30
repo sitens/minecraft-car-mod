@@ -15,7 +15,7 @@ public class HoesacBossRenderer extends MobRenderer<HoesacBossEntity, HoesacBoss
             Identifier.fromNamespaceAndPath(CarMod.MOD_ID, "textures/entity/hoesac_final_boss.png");
 
     public HoesacBossRenderer(EntityRendererProvider.Context context) {
-        super(context, new HoesacBossModel(context.bakeLayer(HoesacBossModel.LAYER)), 8.0F);
+        super(context, new HoesacBossModel(context.bakeLayer(HoesacBossModel.LAYER)), 3.5F);
     }
 
     @Override

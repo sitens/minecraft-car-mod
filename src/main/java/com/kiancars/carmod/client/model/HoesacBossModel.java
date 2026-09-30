@@ -23,8 +23,8 @@ public class HoesacBossModel extends EntityModel<HoesacBossRenderState> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(Identifier.fromNamespaceAndPath(CarMod.MOD_ID, "hoesac_final_boss"), "main");
 
-    /** How many times the renderer blows the model up. 32 units * 8 / 16 = 16 blocks. */
-    public static final float SCALE = 8.0F;
+    /** How many times the renderer blows the model up. 32 units * 3.5 / 16 = 7 blocks. */
+    public static final float SCALE = 3.5F;
 
     private final ModelPart roller;
 

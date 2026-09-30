@@ -4,11 +4,21 @@ NeoForge mod for Minecraft Java Edition **1.21.11**. Targeting release on Modrin
 
 Mod id: `carmod` / package `com.kiancars.carmod`.
 
-**[Download the latest build (carmod-0.4.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.4.0)**
+**[Download the latest build (carmod-0.5.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.5.0)**
 
 ## Changelog
 
 Newest first. Each version says what's new, what got fixed, and what changed.
+
+### v0.5.0 — 2026-09-30
+- **Changed:** The hOesaC Final Boss now has **100 hearts** (was 25) and is **7 blocks wide, tall, and deep** (was 16).
+- **Changed:** The regular hOesaC now has **20 hearts** (was 7) and walks a little faster than a zombie.
+- **New:** **Altars** and a way to summon the Final Boss for real: build the ring, fill it with 12 different junk foods, and blow up TNT in the middle. (Recipe and ring layout are below in "What's in it".)
+- **New:** Junk food now shows up in **chests in villages, abandoned villages, pillager outposts, trial chambers, and every other structure with loot.**
+- **New:** **5 more junk foods** (Pizza Slice, Hot Dog, Ice Cream, Cotton Candy, Cheezy Puffs), so there are 15 now.
+- **New:** **Can of Beans**: fills 3 hunger bars and gives you **Farting** for 1 minute. Every half a second you get boosted about 1 block into the air and let out a toot.
+- **Changed:** Junk food now fills **5 hunger bars** (was 2½). Two minutes after you eat any, you get **Hunger for 20 seconds**.
+- **Heads up:** The fart sound is the pufferfish "pffft" pitched down, because regular Minecraft has no real fart sound.
 
 ### v0.4.0 — 2026-09-30
 - **New:** The **hOesaC Final Boss**: 25 hearts, a purple boss bar, and a giant round body (16 blocks wide, tall, and deep) with tiny arms and legs and a medium-size head. Get him with his spawn egg for now.
@@ -45,7 +55,7 @@ Newest first. Each version says what's new, what got fixed, and what changed.
 - **5x5 Crafting Table** — 16 planks filling the 4x4 table
 - **Standing-up slabs** for every slab in the game (61 of them) — 3 normal slabs stacked in a column make 3 standing slabs. Put one back in the crafting grid to turn it back into a normal slab.
 - **Tacks** — 2 iron ingots stacked make 5 tacks. They're thin and 2 blocks tall. Walking into one does 3 hearts of damage, straight through armor. Breaking one gives back 1 tack.
-- **10 junk foods** — each fills 2½ hunger bars. Made in the 4x4 or 5x5 table, one row of 4 (left → right):
+- **15 junk foods** — each fills 5 hunger bars. Two minutes after you eat one, you get Hunger for 20 seconds. They also turn up in chests everywhere (villages, outposts, trial chambers...). Made in the 4x4 or 5x5 table, one row of 4 (left → right):
 
   | Junk food | Recipe |
   |---|---|
@@ -59,9 +69,33 @@ Newest first. Each version says what's new, what got fixed, and what changed.
   | Donut | Wheat, Egg, Sugar, Pink Dye |
   | Lollipop | Stick, Sugar, Sugar, Red Dye |
   | Popcorn | Bowl, Wheat, Wheat, Wheat (you get the bowl back) |
+  | Pizza Slice | Bread, Cooked Porkchop, Red Mushroom, Bread |
+  | Hot Dog | Bread, Cooked Porkchop, Cooked Porkchop, Bread |
+  | Ice Cream | Snowball, Sugar, Sugar, Wheat |
+  | Cotton Candy | Stick, Sugar, Sugar, Sugar |
+  | Cheezy Puffs | Paper, Wheat, Yellow Dye, Yellow Dye |
+- **Can of Beans** — Iron Ingot, Cocoa Beans, Cocoa Beans, Iron Ingot (one row, in the 4x4 table). Fills 3 hunger bars and gives you **Farting** for 1 minute: you get boosted about 1 block up every half a second, with a toot each time, and no fall damage while it lasts. (Beans aren't junk food, so they don't attract hOesaC.)
+- **Altar** — a pedestal that holds one junk food. Crafted in the 4x4 table (makes 4). Rows, top to bottom:
+  1. (empty)
+  2. Diamond, Crafting Table, Crafting Table, Diamond
+  3. (empty), Mangrove Log, Mangrove Log, (empty)
+  4. Obsidian, Obsidian, Obsidian, Obsidian
+
+  Right-click an altar holding a junk food to put it on. Right-click with an empty hand to take it back. A full altar glows.
+- **Summoning the hOesaC Final Boss** — build this on flat ground (**C** = cobblestone, **A** = an altar holding a junk food, **.** = open ground):
+
+  ```
+  C A A A C
+  A . . . A
+  A . T . A      T = TNT (any of the 9 middle squares)
+  A . . . A
+  C A A A C
+  ```
+
+  That's 12 altars and 4 cobblestone corners, with a 3x3 patch of ground in the middle. Each of the 12 altars must hold a **different** junk food (you have 15 to choose from). Then blow up a TNT in the middle. The altars' junk food gets used up (the altars themselves survive), lightning strikes, and the boss arrives and goes after everyone nearby. If you get the ring wrong, nothing happens.
 - **Wooden Bucket** — a stick on top, then 3 oak planks in a V under it. Holds water or lava, but it wears out fast, and lava burns it a little every second.
-- **hOesaC Final Boss** — a giant round boss with 25 hearts and a purple health bar at the top of your screen. He rolls at you (2 hearts through armor) and jumps up to land on you (suffocation, 7 hearts). Tacks stop his roll: he bounces off them and loses 2 hearts each time. How to summon him in a real game is still being decided, so use his spawn egg in the Car Mod tab.
-- **hOesaC** — an orange mob with 7 hearts who doesn't burn in the sun. He only shows up (and only attacks) when you're carrying junk food. If he beats you, he keeps your junk food, and everything else drops like normal. Beat him to get it back.
+- **hOesaC Final Boss** — a giant round boss (7 blocks wide, tall, and deep) with **100 hearts** and a purple health bar at the top of your screen. He rolls at you (2 hearts through armor) and jumps up to land on you (suffocation, 7 hearts). Tacks stop his roll: he bounces off them and loses 2 hearts each time. Summon him with the altar ritual above (or use his spawn egg in the Car Mod tab).
+- **hOesaC** — an orange mob with 20 hearts who walks a little faster than a zombie and doesn't burn in the sun. He only shows up (and only attacks) when you're carrying junk food. If he beats you, he keeps your junk food, and everything else drops like normal. Beat him to get it back.
 
 ## How to test this on your computer
 
@@ -75,7 +109,7 @@ Newest first. Each version says what's new, what got fixed, and what changed.
 - Type `%appdata%\.minecraft\mods` and hit Enter
 - If a "mods" folder doesn't exist, make one
 - **Delete any older `carmod` file** in there
-- Drop `carmod-0.4.0.jar` (link above) into that folder
+- Drop `carmod-0.5.0.jar` (link above) into that folder
 
 **3. Launch it**
 - Open the Minecraft Launcher
@@ -93,13 +127,15 @@ Newest first. Each version says what's new, what got fixed, and what changed.
 - Drive a car on land (fast) and on water (slow)
 - In Survival, carry some junk food and wait — hOesaC should show up within a minute or two (not in Peaceful)
 - Or use the hOesaC spawn egg to meet him right away
-- For the Final Boss: go to a big, flat, open area (he is 16 blocks wide!), use the hOesaC Final Boss Spawn Egg, and try tacks around yourself
+- For the Final Boss: go to a big, flat, open area, build the altar ring (see above), fill it with 12 different junk foods, and set off TNT in the middle. Or use the hOesaC Final Boss Spawn Egg. Try tacks around yourself!
+- Eat a Can of Beans and enjoy the ride
+- Eat junk food, then wait 2 minutes for the Hunger
 
 **Heads up:** cars are invisible when placed (no car art yet), but you can still ride them.
 
 ## Coming next
 
-The Electronic Bed, Redstone Remote, and Door Inspector (recipes are approved), how to summon the Final Boss, and car textures.
+The AI Crafting Table (suits, weapons, and upgrades), the Electronic Bed, Redstone Remote, and Door Inspector (recipes are approved), and car textures.
 
 ## Known issues
 

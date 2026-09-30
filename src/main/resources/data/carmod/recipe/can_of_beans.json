@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBA"],
+  "key": { "A": "minecraft:iron_ingot", "B": "minecraft:cocoa_beans" },
+  "result": { "id": "carmod:can_of_beans", "count": 1 }
+}

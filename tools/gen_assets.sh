@@ -404,6 +404,11 @@ gummy_worms|Gummy Worms|minecraft:slime_ball minecraft:sugar minecraft:sugar min
 donut|Donut|minecraft:wheat minecraft:egg minecraft:sugar minecraft:pink_dye
 lollipop|Lollipop|minecraft:stick minecraft:sugar minecraft:sugar minecraft:red_dye
 popcorn|Popcorn|minecraft:bowl minecraft:wheat minecraft:wheat minecraft:wheat
+pizza_slice|Pizza Slice|minecraft:bread minecraft:cooked_porkchop minecraft:red_mushroom minecraft:bread
+hot_dog|Hot Dog|minecraft:bread minecraft:cooked_porkchop minecraft:cooked_porkchop minecraft:bread
+ice_cream|Ice Cream|minecraft:snowball minecraft:sugar minecraft:sugar minecraft:wheat
+cotton_candy|Cotton Candy|minecraft:stick minecraft:sugar minecraft:sugar minecraft:sugar
+cheezy_puffs|Cheezy Puffs|minecraft:paper minecraft:wheat minecraft:yellow_dye minecraft:yellow_dye
 "
 JUNK_TAG=""
 LANG_JUNK=""
@@ -507,3 +512,144 @@ EOF
 } > "$A/lang/en_us.json"
 
 echo "generated assets for $(echo $BASES | wc -w) vertical slabs"
+
+# ------------------------------------------------- batch 5: beans, altar, loot
+mkdir -p "$D/loot_modifiers" "$RES/data/neoforge/loot_modifiers" "$A/textures/mob_effect"
+
+# Can of beans
+cat > "$D/recipe/can_of_beans.json" <<'JSON'
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBA"],
+  "key": { "A": "minecraft:iron_ingot", "B": "minecraft:cocoa_beans" },
+  "result": { "id": "carmod:can_of_beans", "count": 1 }
+}
+JSON
+cat > "$A/models/item/can_of_beans.json" <<'JSON'
+{
+  "parent": "minecraft:item/generated",
+  "textures": { "layer0": "carmod:item/can_of_beans" }
+}
+JSON
+cat > "$A/items/can_of_beans.json" <<'JSON'
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "carmod:item/can_of_beans"
+  }
+}
+JSON
+
+# Altar: 4 from the 4x4 table. Rows top to bottom: empty / diamond, crafting table, crafting table, diamond / empty, mangrove log, mangrove log, empty / 4 obsidian.
+cat > "$D/recipe/altar.json" <<'JSON'
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "    ",
+    "DTTD",
+    " LL ",
+    "OOOO"
+  ],
+  "key": {
+    "D": "minecraft:diamond",
+    "T": "minecraft:crafting_table",
+    "L": "minecraft:mangrove_log",
+    "O": "minecraft:obsidian"
+  },
+  "result": { "id": "carmod:altar", "count": 4 }
+}
+JSON
+cat > "$A/models/block/altar.json" <<'JSON'
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/obsidian",
+    "base": "minecraft:block/polished_blackstone",
+    "top": "minecraft:block/obsidian"
+  },
+  "elements": [
+    { "from": [1, 0, 1], "to": [15, 3, 15],
+      "faces": { "down": {"texture": "#base", "cullface": "down"}, "up": {"texture": "#base"}, "north": {"texture": "#base"}, "south": {"texture": "#base"}, "west": {"texture": "#base"}, "east": {"texture": "#base"} } },
+    { "from": [5, 3, 5], "to": [11, 9, 11],
+      "faces": { "north": {"texture": "#base"}, "south": {"texture": "#base"}, "west": {"texture": "#base"}, "east": {"texture": "#base"} } },
+    { "from": [2, 9, 2], "to": [14, 12, 14],
+      "faces": { "down": {"texture": "#base"}, "up": {"texture": "#top"}, "north": {"texture": "#base"}, "south": {"texture": "#base"}, "west": {"texture": "#base"}, "east": {"texture": "#base"} } }
+  ]
+}
+JSON
+cat > "$A/models/block/altar_filled.json" <<'JSON'
+{
+  "parent": "carmod:block/altar",
+  "textures": {
+    "top": "minecraft:block/crying_obsidian"
+  }
+}
+JSON
+{
+  echo '{'
+  echo '  "variants": {'
+  echo '    "food=0": { "model": "carmod:block/altar" },'
+  for i in $(seq 1 15); do
+    sep=","; [[ $i == 15 ]] && sep=""
+    echo "    \"food=$i\": { \"model\": \"carmod:block/altar_filled\" }$sep"
+  done
+  echo '  }'
+  echo '}'
+} > "$A/blockstates/altar.json"
+cat > "$A/items/altar.json" <<'JSON'
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "carmod:block/altar"
+  }
+}
+JSON
+cat > "$D/loot_table/blocks/altar.json" <<'JSON'
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [ { "type": "minecraft:item", "name": "carmod:altar" } ],
+      "conditions": [ { "condition": "minecraft:survives_explosion" } ]
+    }
+  ]
+}
+JSON
+
+# Junk food in every chest loot table
+cat > "$D/loot_modifiers/junk_food_in_chests.json" <<'JSON'
+{
+  "type": "carmod:junk_food_in_chests",
+  "conditions": []
+}
+JSON
+cat > "$RES/data/neoforge/loot_modifiers/global_loot_modifiers.json" <<'JSON'
+{
+  "replace": false,
+  "entries": ["carmod:junk_food_in_chests"]
+}
+JSON
+
+# Mining tags: the altar needs a pickaxe (added on top of the earlier tag files)
+perl -0pi -e 's|"carmod:tack"\]|"carmod:tack","carmod:altar"]|' "$RES/data/minecraft/tags/block/mineable/pickaxe.json"
+mkdir -p "$RES/data/minecraft/tags/block/needs_iron_tool" 2>/dev/null
+cat > "$RES/data/minecraft/tags/block/needs_iron_tool.json" <<'JSON'
+{
+  "replace": false,
+  "values": ["carmod:altar"]
+}
+JSON
+rmdir "$RES/data/minecraft/tags/block/needs_iron_tool" 2>/dev/null || true
+
+# Extra names (appended to en_us.json)
+EXTRA_LANG='  "block.carmod.altar": "Altar",
+  "item.carmod.can_of_beans": "Can of Beans",
+  "effect.carmod.farting": "Farting",
+  "message.carmod.altar_took": "Took back: %s",
+  "message.carmod.boss_summoned": "The ground shakes... the hOesaC Final Boss has arrived!",'
+perl -0pi -e "s|(  \"itemGroup.carmod.car_tab\": \"Car Mod\",\n)|\$1$EXTRA_LANG\n|" "$A/lang/en_us.json"
+echo "batch 5 assets done"

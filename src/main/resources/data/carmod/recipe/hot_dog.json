@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ABBA"],
+  "key": { "A": "minecraft:bread", "B": "minecraft:cooked_porkchop" },
+  "result": { "id": "carmod:hot_dog", "count": 1 }
+}

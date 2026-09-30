@@ -1,0 +1,6 @@
+{
+  "parent": "carmod:block/altar",
+  "textures": {
+    "top": "minecraft:block/crying_obsidian"
+  }
+}

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * hOesaC: a junk-food-hungry mob built on the zombie. 7 hearts, doesn't burn
+ * hOesaC: a junk-food-hungry mob built on the zombie. 20 hearts, a bit faster than a zombie, doesn't burn
  * in daylight, and only goes after players who are carrying junk food —
  * without junk food he leaves you alone, even if you hit him. If he kills
  * you, he keeps your junk food (everything else drops normally) and gives
@@ -43,7 +43,10 @@ public class HoesacEntity extends Zombie {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.MAX_HEALTH, 14.0);
+        // 20 hearts, and a little faster than a zombie (0.23).
+        return Zombie.createAttributes()
+                .add(Attributes.MAX_HEALTH, 40.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.27);
     }
 
     @Override
