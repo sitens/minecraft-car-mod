@@ -6,6 +6,7 @@ import com.kiancars.carmod.client.renderer.CarRenderer;
 import com.kiancars.carmod.client.renderer.HoesacBossRenderer;
 import com.kiancars.carmod.client.renderer.HoesacRenderer;
 import com.kiancars.carmod.client.screen.BigCraftingScreen;
+import com.kiancars.carmod.client.screen.HeroWorkshopScreen;
 import com.kiancars.carmod.registry.ModEntities;
 import com.kiancars.carmod.registry.ModMenus;
 import net.minecraft.world.entity.monster.zombie.Zombie;
@@ -36,6 +37,7 @@ public final class CarModClient {
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.CRAFTING_TABLE_4X4.get(), BigCraftingScreen::new);
         event.register(ModMenus.CRAFTING_TABLE_5X5.get(), BigCraftingScreen::new);
+        event.register(ModMenus.AI_WORKSHOP.get(), HeroWorkshopScreen::new);
     }
 
     private CarModClient() {

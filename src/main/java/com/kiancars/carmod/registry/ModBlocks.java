@@ -1,6 +1,7 @@
 package com.kiancars.carmod.registry;
 
 import com.kiancars.carmod.CarMod;
+import com.kiancars.carmod.block.AiCraftingTableBlock;
 import com.kiancars.carmod.block.AltarBlock;
 import com.kiancars.carmod.block.BigCraftingTableBlock;
 import com.kiancars.carmod.block.TackBlock;
@@ -32,6 +33,11 @@ public final class ModBlocks {
     public static final DeferredBlock<BigCraftingTableBlock> CRAFTING_TABLE_5X5 =
             BLOCKS.registerBlock("crafting_table_5x5", props -> new BigCraftingTableBlock(props, 5),
                     props -> props.mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).ignitedByLava());
+
+    public static final DeferredBlock<AiCraftingTableBlock> AI_CRAFTING_TABLE =
+            BLOCKS.registerBlock("ai_crafting_table", AiCraftingTableBlock::new,
+                    props -> props.mapColor(MapColor.COLOR_CYAN).strength(3.0F).sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops());
 
     /** Blast-proof so a ritual TNT blast leaves the ring standing. */
     public static final DeferredBlock<AltarBlock> ALTAR =

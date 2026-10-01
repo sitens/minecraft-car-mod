@@ -108,5 +108,12 @@
   "block.carmod.waxed_exposed_cut_copper_vertical_slab": "Waxed Exposed Cut Copper Vertical Slab",
   "block.carmod.waxed_oxidized_cut_copper_vertical_slab": "Waxed Oxidized Cut Copper Vertical Slab",
   "block.carmod.waxed_weathered_cut_copper_vertical_slab": "Waxed Weathered Cut Copper Vertical Slab",
-  "block.carmod.weathered_cut_copper_vertical_slab": "Weathered Cut Copper Vertical Slab"
+  "block.carmod.weathered_cut_copper_vertical_slab": "Weathered Cut Copper Vertical Slab",
+  "block.carmod.ai_crafting_table": "AI Crafting Table",
+  "container.carmod.ai_workshop": "AI Crafting Table",
+  "item.carmod.hero_suit": "Hero Suit",
+  "item.carmod.hero_blade": "Hero Blade",
+  "item.carmod.hero_axe": "Hero Axe",
+  "item.carmod.hero_pickaxe": "Hero Pickaxe",
+  "item.carmod.hero_shovel": "Hero Shovel"
 }

@@ -4,13 +4,13 @@ NeoForge mod for Minecraft Java Edition **1.21.11**. Targeting release on Modrin
 
 Mod id: `carmod` / package `com.kiancars.carmod`.
 
-**[Download the latest build (carmod-0.5.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.5.0)**
+**[Download the latest build (carmod-0.6.0.jar)](https://github.com/sitens/minecraft-car-mod/releases/tag/v0.6.0)**
 
 ## Changelog
 
 Newest first. Each version says what's new, what got fixed, and what changed.
 
-### v0.5.0 — 2026-09-30
+### v0.6.0 — 2026-09-30
 - **Changed:** The hOesaC Final Boss now has **100 hearts** (was 25) and is **7 blocks wide, tall, and deep** (was 16).
 - **Changed:** The regular hOesaC now has **20 hearts** (was 7) and walks a little faster than a zombie.
 - **New:** **Altars** and a way to summon the Final Boss for real: build the ring, fill it with 12 different junk foods, and blow up TNT in the middle. (Recipe and ring layout are below in "What's in it".)
@@ -93,6 +93,7 @@ Newest first. Each version says what's new, what got fixed, and what changed.
   ```
 
   That's 12 altars and 4 cobblestone corners, with a 3x3 patch of ground in the middle. Each of the 12 altars must hold a **different** junk food (you have 15 to choose from). Then blow up a TNT in the middle. The altars' junk food gets used up (the altars themselves survive), lightning strikes, and the boss arrives and goes after everyone nearby. If you get the ring wrong, nothing happens.
+- **AI Crafting Table** — crafted in the 4x4 table. Rows, top to bottom: Diamond, Redstone Block, Redstone Block, Diamond / Lapis Block, 4x4 Crafting Table, Observer, Lapis Block / 4 Iron Blocks. Right-click it to meet the built-in AI. It makes a Suit, Blade, Axe, Pickaxe and Shovel for every tier, each with its own powers, upgrades and ingredient list (the ingredients get rarer and bigger every tier). Beat 100 peaceful mobs for Mk 2, 120 for Mk 3, then 20 more each time, forever.
 - **Wooden Bucket** — a stick on top, then 3 oak planks in a V under it. Holds water or lava, but it wears out fast, and lava burns it a little every second.
 - **hOesaC Final Boss** — a giant round boss (7 blocks wide, tall, and deep) with **100 hearts** and a purple health bar at the top of your screen. He rolls at you (2 hearts through armor) and jumps up to land on you (suffocation, 7 hearts). Tacks stop his roll: he bounces off them and loses 2 hearts each time. Summon him with the altar ritual above (or use his spawn egg in the Car Mod tab).
 - **hOesaC** — an orange mob with 20 hearts who walks a little faster than a zombie and doesn't burn in the sun. He only shows up (and only attacks) when you're carrying junk food. If he beats you, he keeps your junk food, and everything else drops like normal. Beat him to get it back.
@@ -109,7 +110,7 @@ Newest first. Each version says what's new, what got fixed, and what changed.
 - Type `%appdata%\.minecraft\mods` and hit Enter
 - If a "mods" folder doesn't exist, make one
 - **Delete any older `carmod` file** in there
-- Drop `carmod-0.5.0.jar` (link above) into that folder
+- Drop `carmod-0.6.0.jar` (link above) into that folder
 
 **3. Launch it**
 - Open the Minecraft Launcher

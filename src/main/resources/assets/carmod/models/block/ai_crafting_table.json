@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "carmod:block/ai_crafting_table_bottom",
+    "top": "carmod:block/ai_crafting_table_top",
+    "side": "carmod:block/ai_crafting_table_side",
+    "particle": "carmod:block/ai_crafting_table_side"
+  }
+}

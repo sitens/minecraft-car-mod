@@ -33,6 +33,7 @@ public final class ModCreativeTabs {
                         ModItems.junkFoods().forEach(item -> output.accept(item.get()));
                         output.accept(ModItems.CAN_OF_BEANS.get());
                         output.accept(ModItems.ALTAR.get());
+                        output.accept(ModItems.AI_CRAFTING_TABLE.get());
                         ModItems.verticalSlabItems().values().forEach(item -> output.accept(item.get()));
                     })
                     .build());

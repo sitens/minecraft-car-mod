@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "carmod:block/ai_crafting_table"
+    }
+  }
+}

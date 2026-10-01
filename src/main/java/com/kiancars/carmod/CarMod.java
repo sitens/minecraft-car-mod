@@ -1,7 +1,10 @@
 package com.kiancars.carmod;
 
 import com.kiancars.carmod.event.ModEvents;
+import com.kiancars.carmod.hero.HeroEvents;
+import com.kiancars.carmod.registry.ModAttachments;
 import com.kiancars.carmod.registry.ModBlocks;
+import com.kiancars.carmod.registry.ModComponents;
 import com.kiancars.carmod.registry.ModCreativeTabs;
 import com.kiancars.carmod.registry.ModEffects;
 import com.kiancars.carmod.registry.ModEntities;
@@ -26,6 +29,8 @@ public class CarMod {
         ModItems.ITEMS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
+        ModAttachments.ATTACHMENTS.register(modEventBus);
+        ModComponents.COMPONENTS.register(modEventBus);
         ModEffects.EFFECTS.register(modEventBus);
         ModLootModifiers.MODIFIERS.register(modEventBus);
         ModCreativeTabs.CREATIVE_TABS.register(modEventBus);
@@ -35,5 +40,9 @@ public class CarMod {
         NeoForge.EVENT_BUS.addListener(ModEvents::onLivingDrops);
         NeoForge.EVENT_BUS.addListener(ModEvents::onItemFinished);
         NeoForge.EVENT_BUS.addListener(ModEvents::onExplosion);
+        NeoForge.EVENT_BUS.addListener(HeroEvents::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(HeroEvents::onDamagePre);
+        NeoForge.EVENT_BUS.addListener(HeroEvents::onDamagePost);
+        NeoForge.EVENT_BUS.addListener(HeroEvents::onDeath);
     }
 }

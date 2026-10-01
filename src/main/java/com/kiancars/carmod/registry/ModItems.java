@@ -4,7 +4,16 @@ import com.kiancars.carmod.CarMod;
 import com.kiancars.carmod.entity.CarType;
 import com.kiancars.carmod.item.CarItem;
 import com.kiancars.carmod.item.WoodenBucketItem;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Unit;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
@@ -124,6 +133,36 @@ public final class ModItems {
     public static final DeferredItem<SpawnEggItem> HOESAC_BOSS_SPAWN_EGG =
             ITEMS.registerItem("hoesac_final_boss_spawn_egg", SpawnEggItem::new,
                     props -> props.spawnEgg(ModEntities.HOESAC_BOSS.get()));
+
+    // ------------------------------------------------ AI hero gear
+    // These are blank templates; the AI Crafting Table fills in the name, tier, stats and powers.
+
+    private static final ResourceKey<EquipmentAsset> HERO_SUIT_ASSET =
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(CarMod.MOD_ID, "hero_suit"));
+
+    public static final DeferredItem<Item> HERO_SUIT =
+            ITEMS.registerItem("hero_suit", Item::new, props -> props.stacksTo(1).fireResistant()
+                    .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+                    .component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.CHEST).setAsset(HERO_SUIT_ASSET).build()));
+
+    public static final DeferredItem<Item> HERO_BLADE =
+            ITEMS.registerItem("hero_blade", Item::new, props -> props.stacksTo(1).fireResistant()
+                    .component(DataComponents.UNBREAKABLE, Unit.INSTANCE).sword(ToolMaterial.NETHERITE, 3.0F, -2.4F));
+
+    public static final DeferredItem<Item> HERO_AXE =
+            ITEMS.registerItem("hero_axe", Item::new, props -> props.stacksTo(1).fireResistant()
+                    .component(DataComponents.UNBREAKABLE, Unit.INSTANCE).axe(ToolMaterial.NETHERITE, 5.0F, -3.0F));
+
+    public static final DeferredItem<Item> HERO_PICKAXE =
+            ITEMS.registerItem("hero_pickaxe", Item::new, props -> props.stacksTo(1).fireResistant()
+                    .component(DataComponents.UNBREAKABLE, Unit.INSTANCE).pickaxe(ToolMaterial.NETHERITE, 1.0F, -2.8F));
+
+    public static final DeferredItem<Item> HERO_SHOVEL =
+            ITEMS.registerItem("hero_shovel", Item::new, props -> props.stacksTo(1).fireResistant()
+                    .component(DataComponents.UNBREAKABLE, Unit.INSTANCE).shovel(ToolMaterial.NETHERITE, 1.5F, -3.0F));
+
+    public static final DeferredItem<BlockItem> AI_CRAFTING_TABLE =
+            ITEMS.registerSimpleBlockItem("ai_crafting_table", ModBlocks.AI_CRAFTING_TABLE);
 
     private static final Map<CarType, DeferredItem<CarItem>> CAR_ITEMS = new EnumMap<>(CarType.class);
     private static final Map<String, DeferredItem<BlockItem>> VERTICAL_SLAB_ITEMS = new LinkedHashMap<>();

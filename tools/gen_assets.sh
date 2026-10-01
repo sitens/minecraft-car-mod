@@ -653,3 +653,4 @@ EXTRA_LANG='  "block.carmod.altar": "Altar",
   "message.carmod.boss_summoned": "The ground shakes... the hOesaC Final Boss has arrived!",'
 perl -0pi -e "s|(  \"itemGroup.carmod.car_tab\": \"Car Mod\",\n)|\$1$EXTRA_LANG\n|" "$A/lang/en_us.json"
 echo "batch 5 assets done"
+node tools/gen_hero_assets.js

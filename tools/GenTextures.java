@@ -41,6 +41,8 @@ public class GenTextures {
         cheezyPuffs();
         canOfBeans();
         fartingIcon();
+        heroGear();
+        aiTable();
         System.out.println("textures written");
     }
 
@@ -410,6 +412,103 @@ public class GenTextures {
             }
         }
         save(img, "block/tack.png");
+    }
+
+
+    // ------------------------------------------------------------- AI gear
+    // Drawn in grey/white so the dye tint (the AI picks a colour per design) shows through.
+
+    static void heroGear() throws IOException {
+        BufferedImage sword = blank();
+        for (int i = 0; i < 10; i++) {
+            set(sword, 3 + i, 12 - i, 0xFFFFFFFF);
+            set(sword, 4 + i, 12 - i, 0xFFD0D0D0);
+            set(sword, 3 + i, 13 - i, 0xFF9A9A9A);
+        }
+        for (int i = 0; i < 5; i++) {
+            set(sword, 2 + i, 8 + i - 2 * 0, 0xFF707070);
+        }
+        set(sword, 2, 13, 0xFF505050); set(sword, 1, 14, 0xFF505050); set(sword, 3, 12, 0xFFB0B0B0);
+        set(sword, 12, 3, 0xFFFFFFFF); set(sword, 13, 2, 0xFFFFFFFF);
+        save(sword, "item/hero_blade.png");
+
+        BufferedImage axe = blank();
+        for (int i = 0; i < 12; i++) {
+            set(axe, 2 + i / 1, 13 - i, 0xFF8A8A8A);
+        }
+        rect(axe, 8, 2, 5, 5, 0xFFFFFFFF);
+        rect(axe, 7, 3, 1, 3, 0xFFD0D0D0);
+        rect(axe, 12, 3, 2, 4, 0xFFB0B0B0);
+        save(axe, "item/hero_axe.png");
+
+        BufferedImage pick = blank();
+        for (int i = 0; i < 11; i++) {
+            set(pick, 2 + i, 13 - i, 0xFF8A8A8A);
+        }
+        rect(pick, 4, 2, 9, 2, 0xFFFFFFFF);
+        rect(pick, 3, 3, 1, 3, 0xFFD0D0D0);
+        rect(pick, 12, 3, 1, 3, 0xFFD0D0D0);
+        rect(pick, 5, 4, 7, 1, 0xFFB0B0B0);
+        save(pick, "item/hero_pickaxe.png");
+
+        BufferedImage shovel = blank();
+        for (int i = 0; i < 10; i++) {
+            set(shovel, 3 + i, 13 - i, 0xFF8A8A8A);
+        }
+        rect(shovel, 10, 2, 4, 4, 0xFFFFFFFF);
+        rect(shovel, 11, 3, 2, 2, 0xFFD0D0D0);
+        save(shovel, "item/hero_shovel.png");
+
+        BufferedImage suit = blank();
+        rect(suit, 2, 3, 12, 11, 0xFFFFFFFF);
+        rect(suit, 5, 2, 6, 2, 0xFF000000 | 0x303030);
+        rect(suit, 0, 3, 3, 6, 0xFFD8D8D8);
+        rect(suit, 13, 3, 3, 6, 0xFFD8D8D8);
+        rect(suit, 6, 6, 4, 4, 0xFFFFD84A);
+        rect(suit, 7, 7, 2, 2, 0xFFFFFFFF);
+        rect(suit, 2, 12, 12, 2, 0xFFB0B0B0);
+        save(suit, "item/hero_suit.png");
+
+        BufferedImage worn = new BufferedImage(64, 32, BufferedImage.TYPE_INT_ARGB);
+        Random rnd = new Random(7);
+        fillNoisy(worn, rnd, 16, 16, 24, 16, 0xFFE0E0E0, 14);
+        fillNoisy(worn, rnd, 40, 16, 16, 16, 0xFFD0D0D0, 14);
+        fillNoisy(worn, rnd, 0, 16, 16, 16, 0xFFD0D0D0, 14);
+        rect(worn, 20, 20, 8, 8, 0xFFFFD84A);
+        rect(worn, 22, 22, 4, 4, 0xFFFFFFFF);
+        rect(worn, 16, 30, 24, 2, 0xFF909090);
+        save(worn, "entity/equipment/humanoid/hero_suit.png");
+    }
+
+    static BufferedImage blank() {
+        return new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+    }
+
+    static void aiTable() throws IOException {
+        Random rnd = new Random(11);
+        BufferedImage side = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        fillNoisy(side, rnd, 0, 0, 16, 16, 0xFF3A4150, 10);
+        rect(side, 0, 0, 16, 1, 0xFF1D2129); rect(side, 0, 15, 16, 1, 0xFF1D2129);
+        rect(side, 0, 0, 1, 16, 0xFF1D2129); rect(side, 15, 0, 1, 16, 0xFF1D2129);
+        rect(side, 3, 4, 10, 8, 0xFF0E1218);
+        rect(side, 4, 5, 8, 1, 0xFF3FD1D1); rect(side, 4, 7, 5, 1, 0xFF3FD1D1);
+        rect(side, 4, 9, 7, 1, 0xFF3FD1D1); rect(side, 10, 7, 2, 1, 0xFF8AF0A0);
+        save(side, "block/ai_crafting_table_side.png");
+
+        BufferedImage top = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        fillNoisy(top, rnd, 0, 0, 16, 16, 0xFF2A303C, 8);
+        rect(top, 0, 0, 16, 1, 0xFF1D2129); rect(top, 0, 15, 16, 1, 0xFF1D2129);
+        rect(top, 0, 0, 1, 16, 0xFF1D2129); rect(top, 15, 0, 1, 16, 0xFF1D2129);
+        for (int i = 0; i < 4; i++) {
+            rect(top, 3 + i * 3, 3, 1, 10, 0xFF3FD1D1);
+            rect(top, 3, 3 + i * 3, 10, 1, 0xFF3FD1D1);
+        }
+        rect(top, 7, 7, 3, 3, 0xFFFFD84A);
+        save(top, "block/ai_crafting_table_top.png");
+
+        BufferedImage bottom = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        fillNoisy(bottom, rnd, 0, 0, 16, 16, 0xFF1F232C, 8);
+        save(bottom, "block/ai_crafting_table_bottom.png");
     }
 
     // --------------------------------------------------------- wooden bucket

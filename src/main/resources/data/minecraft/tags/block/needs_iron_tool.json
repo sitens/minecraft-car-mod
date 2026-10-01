@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "values": ["carmod:altar"]
+  "values": [
+    "carmod:altar",
+    "carmod:ai_crafting_table"
+  ]
 }

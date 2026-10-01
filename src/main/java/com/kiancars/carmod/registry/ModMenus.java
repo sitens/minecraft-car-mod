@@ -2,6 +2,7 @@ package com.kiancars.carmod.registry;
 
 import com.kiancars.carmod.CarMod;
 import com.kiancars.carmod.menu.BigCraftingMenu;
+import com.kiancars.carmod.menu.HeroWorkshopMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
@@ -21,6 +22,10 @@ public final class ModMenus {
     public static final DeferredHolder<MenuType<?>, MenuType<BigCraftingMenu>> CRAFTING_TABLE_5X5 =
             MENUS.register("crafting_table_5x5", () -> IMenuTypeExtension.create(
                     (windowId, inv, data) -> BigCraftingMenu.fiveByFive(windowId, inv, ContainerLevelAccess.NULL)));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<HeroWorkshopMenu>> AI_WORKSHOP =
+            MENUS.register("ai_workshop", () -> IMenuTypeExtension.create(
+                    (windowId, inv, data) -> new HeroWorkshopMenu(windowId, inv, ContainerLevelAccess.NULL)));
 
     private ModMenus() {
     }
