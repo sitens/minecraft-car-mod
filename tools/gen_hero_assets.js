@@ -44,6 +44,9 @@ const lang = JSON.parse(fs.readFileSync(langPath, "utf8"));
 Object.assign(lang, {
   "block.carmod.ai_crafting_table": "AI Crafting Table",
   "container.carmod.ai_workshop": "AI Crafting Table",
+  "key.carmod.ability": "Use suit ability",
+  "key.carmod.cycle_ability": "Switch ability",
+  "key.category.carmod.hero": "Car Mod Heroes",
   "item.carmod.hero_suit": "Hero Suit",
   "item.carmod.hero_blade": "Hero Blade",
   "item.carmod.hero_axe": "Hero Axe",

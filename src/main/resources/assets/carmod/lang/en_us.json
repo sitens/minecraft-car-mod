@@ -115,5 +115,8 @@
   "item.carmod.hero_blade": "Hero Blade",
   "item.carmod.hero_axe": "Hero Axe",
   "item.carmod.hero_pickaxe": "Hero Pickaxe",
-  "item.carmod.hero_shovel": "Hero Shovel"
+  "item.carmod.hero_shovel": "Hero Shovel",
+  "key.carmod.ability": "Use suit ability",
+  "key.carmod.cycle_ability": "Switch ability",
+  "key.category.carmod.hero": "Car Mod Heroes"
 }

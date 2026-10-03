@@ -20,7 +20,10 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -40,7 +43,13 @@ public final class HeroEvents {
     // ------------------------------------------------------ passive powers
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 20 != 0) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        if (player.tickCount % 10 == 0) {
+            HeroAbilities.tickFlight(player);
+        }
+        if (player.tickCount % 20 != 0) {
             return;
         }
         applyPassives(player, player.getItemBySlot(EquipmentSlot.CHEST));
@@ -65,6 +74,19 @@ public final class HeroEvents {
             // Refreshed every second with a short timer, so taking the gear off ends the power quickly.
             effect.ifPresent(holder -> player.addEffect(
                     new MobEffectInstance(holder, 60, power.level() - 1, true, false, false)));
+        }
+    }
+
+    /** Right-clicking with a hero tool or blade uses its ability. */
+    public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getHand() == InteractionHand.MAIN_HAND) {
+            HeroAbilities.useHeldAbility(player, event.getItemStack());
+        }
+    }
+
+    public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            HeroAbilities.forget(player);
         }
     }
 

@@ -3,30 +3,32 @@ package com.kiancars.carmod.hero;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 /**
- * The built-in "AI". Given a tier and a piece of gear it invents a name,
- * a color, a set of superpowers and a crafting cost. It's deterministic: the
- * same tier always gives the same design, on the server and on every client,
- * so nothing has to be sent over the network. There is no top tier: tier
- * 1,000 gets designed just like tier 2.
+ * The built-in "AI". Given what the player searched for, a tier and a piece
+ * of gear it invents a name, a color, superpowers that fit the search, and a
+ * crafting cost. It is deterministic: the same search, tier and gear always
+ * give the same design, on the server and on every client, so nothing has to
+ * be saved. There is no top tier: tier 1,000 is designed just like tier 2.
+ * <p>
+ * It works offline by matching your words against a library of themes
+ * (spider, thunder, teleport, ...) and mixing their powers. Searches it does
+ * not recognise still work: it improvises from the letters you typed.
  */
 public final class HeroGenerator {
 
+    public static final int MAX_QUERY = 30;
+
     private static final String[] ADJECTIVES = {
-            "Crimson", "Azure", "Golden", "Shadow", "Storm", "Nova", "Iron", "Solar", "Lunar", "Phantom",
-            "Emerald", "Thunder", "Frost", "Blaze", "Cosmic", "Silent", "Mighty", "Radiant", "Savage", "Atomic",
+            "Crimson", "Azure", "Golden", "Shadow", "Storm", "Nova", "Prime", "Solar", "Lunar", "Phantom",
+            "Emerald", "Ultra", "Frost", "Blaze", "Cosmic", "Silent", "Mighty", "Radiant", "Savage", "Atomic",
             "Turbo", "Mystic", "Velvet", "Neon", "Rogue", "Royal", "Rapid", "Titan", "Ember", "Vortex"};
-
-    private static final String[] SUIT_NOUNS = {
-            "Guardian", "Vanguard", "Sentinel", "Defender", "Champion", "Warden", "Paladin", "Striker",
-            "Ranger", "Avenger", "Protector", "Crusader", "Enforcer", "Hero", "Marshal", "Aegis"};
-
-    private static final String[] WEAPON_NOUNS = {
-            "Fang", "Thorn", "Cleaver", "Reaper", "Breaker", "Slicer", "Edge", "Wrath", "Fury", "Talon",
-            "Smasher", "Piercer", "Ravager", "Whisper", "Comet", "Bane"};
 
     /** Crafting materials by difficulty: bracket 0 is everyday stuff, higher brackets are rarer. */
     private static final String[][] MATERIALS = {
@@ -41,68 +43,168 @@ public final class HeroGenerator {
         return 100 + 20 * (Math.max(tier, 1) - 1);
     }
 
-    public static HeroDesign design(int tier, HeroGear gear) {
-        int t = Math.max(tier, 1);
-        Random random = new Random(seed(t, gear));
-        String name = name(random, t, gear);
-        int color = color(random);
-        return new HeroDesign(t, gear, name, color, powers(random, t, gear), upgrades(random, t, gear), cost(random, t, gear));
+    /** Tidies a search: lowercase, single spaces, limited length. */
+    public static String normalize(String query) {
+        String q = query == null ? "" : query.trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
+        return q.length() > MAX_QUERY ? q.substring(0, MAX_QUERY).trim() : q;
     }
 
-    /** All five designs for one tier, suit first. */
-    public static List<HeroDesign> designsForTier(int tier) {
-        List<HeroDesign> designs = new ArrayList<>();
-        for (HeroGear gear : HeroGear.ALL) {
-            designs.add(design(tier, gear));
+    /** True when the AI recognises at least one word of the search. */
+    public static boolean understands(String query) {
+        String q = normalize(query);
+        for (HeroTheme theme : HeroTheme.ALL) {
+            if (theme.score(q) > 0) {
+                return true;
+            }
         }
-        return designs;
+        return false;
+    }
+
+    public static HeroDesign design(String query, int tier, HeroGear gear) {
+        String q = normalize(query);
+        int t = Math.max(tier, 1);
+        Random random = new Random(seed(q, t, gear));
+        List<HeroTheme> themes = themesFor(q);
+        String name = name(random, q, t, gear);
+        int color = color(random, themes.get(0), t);
+        return new HeroDesign(q, t, gear, name, color, powers(random, themes, t, gear),
+                abilities(themes, t, gear), upgrades(random, t, gear), cost(random, t, gear));
     }
 
     // ------------------------------------------------------------------ parts
 
-    private static long seed(int tier, HeroGear gear) {
-        long x = tier * 1_000_003L + gear.ordinal() * 7_919L + 0x5DEECE66DL;
+    private static long hash(String text) {
+        long h = 1125899906842597L;
+        for (int i = 0; i < text.length(); i++) {
+            h = 31 * h + text.charAt(i);
+        }
+        return h;
+    }
+
+    private static long seed(String query, int tier, HeroGear gear) {
+        long x = hash(query) + tier * 1_000_003L + gear.ordinal() * 7_919L + 0x5DEECE66DL;
         x ^= (x << 21);
         x ^= (x >>> 35);
         x ^= (x << 4);
         return x * 0x9E3779B97F4A7C15L;
     }
 
-    private static String name(Random random, int tier, HeroGear gear) {
-        String adjective = ADJECTIVES[random.nextInt(ADJECTIVES.length)];
-        String[] nouns = gear == HeroGear.SUIT ? SUIT_NOUNS : WEAPON_NOUNS;
-        String noun = nouns[random.nextInt(nouns.length)];
-        return adjective + " " + noun + " " + gear.label() + " Mk " + tier;
+    /** The one or two themes that best match the search (or lucky guesses if nothing matches). */
+    static List<HeroTheme> themesFor(String query) {
+        List<HeroTheme> matches = new ArrayList<>(HeroTheme.ALL);
+        matches.removeIf(theme -> theme.score(query) <= 0);
+        matches.sort(Comparator.comparingInt((HeroTheme theme) -> theme.score(query)).reversed());
+        if (matches.size() > 2) {
+            matches = new ArrayList<>(matches.subList(0, 2));
+        }
+        if (matches.isEmpty()) {
+            Random random = new Random(hash(query));
+            List<HeroTheme> all = new ArrayList<>(HeroTheme.ALL);
+            Collections.shuffle(all, random);
+            matches = new ArrayList<>(all.subList(0, 2));
+        }
+        return matches;
     }
 
-    private static int color(Random random) {
-        float hue = random.nextFloat();
+    private static String title(String query) {
+        StringBuilder out = new StringBuilder();
+        boolean up = true;
+        for (char c : query.toCharArray()) {
+            out.append(up ? Character.toUpperCase(c) : c);
+            up = c == ' ' || c == '-';
+        }
+        return out.length() == 0 ? "Hero" : out.toString();
+    }
+
+    private static String name(Random random, String query, int tier, HeroGear gear) {
+        String adjective = ADJECTIVES[random.nextInt(ADJECTIVES.length)];
+        return adjective + " " + title(query) + " " + gear.label() + " Mk " + tier;
+    }
+
+    private static int color(Random random, HeroTheme theme, int tier) {
+        float hue = (theme.hue() + (random.nextFloat() - 0.5F) * 0.08F + 1.0F) % 1.0F;
         float saturation = 0.55F + random.nextFloat() * 0.35F;
         float brightness = 0.80F + random.nextFloat() * 0.20F;
         return Color.HSBtoRGB(hue, saturation, brightness) & 0xFFFFFF;
     }
 
-    private static List<HeroDesign.PowerLevel> powers(Random random, int tier, HeroGear gear) {
-        List<HeroDesign.PowerLevel> result = new ArrayList<>();
-        List<HeroPower> passives = new ArrayList<>(HeroPower.PASSIVES);
-        List<HeroPower> hits = new ArrayList<>(HeroPower.ON_HIT);
-        Collections.shuffle(passives, random);
-        Collections.shuffle(hits, random);
+    private static <T> List<T> interleave(List<HeroTheme> themes, java.util.function.Function<HeroTheme, List<T>> pick) {
+        Set<T> result = new LinkedHashSet<>();
+        int longest = 0;
+        for (HeroTheme theme : themes) {
+            longest = Math.max(longest, pick.apply(theme).size());
+        }
+        // The best-matching theme gets two picks per round, so it leads the list.
+        for (int i = 0; i < longest; i++) {
+            for (int k = 0; k < themes.size(); k++) {
+                List<T> list = pick.apply(themes.get(k));
+                int picks = k == 0 ? 2 : 1;
+                for (int j = 0; j < picks; j++) {
+                    int index = k == 0 ? 2 * i + j : i;
+                    if (index < list.size()) {
+                        result.add(list.get(index));
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(result);
+    }
 
+    /** The active abilities: the suit gets the most, each tool or blade gets its own pick. */
+    private static List<HeroDesign.AbilityLevel> abilities(List<HeroTheme> themes, int tier, HeroGear gear) {
+        List<HeroAbility> pool = interleave(themes, HeroTheme::abilities);
+        List<HeroDesign.AbilityLevel> result = new ArrayList<>();
+        if (gear == HeroGear.SUIT) {
+            int count = Math.min(2 + (tier - 1) / 2, pool.size());
+            for (int i = 0; i < count; i++) {
+                result.add(abilityLevel(pool.get(i), tier, i));
+            }
+            return result;
+        }
+        pool.removeIf(HeroAbility::suitOnly);
+        int count = Math.min(1 + (tier - 1) / 4, pool.size());
+        int start = gear.ordinal() - 1;
+        for (int i = 0; i < count; i++) {
+            result.add(abilityLevel(pool.get((start + i) % pool.size()), tier, i));
+        }
+        return result;
+    }
+
+    private static HeroDesign.AbilityLevel abilityLevel(HeroAbility ability, int tier, int index) {
+        return new HeroDesign.AbilityLevel(ability, Math.min(1 + Math.max(0, tier - 1 - index) / 3, 10));
+    }
+
+    private static List<HeroDesign.PowerLevel> powers(Random random, List<HeroTheme> themes, int tier, HeroGear gear) {
+        List<HeroDesign.PowerLevel> result = new ArrayList<>();
         int index = 0;
         if (gear == HeroGear.SUIT) {
-            int count = Math.min(2 + (tier - 1) / 2, passives.size());
+            List<HeroPower> pool = interleave(themes, HeroTheme::passives);
+            List<HeroPower> extra = new ArrayList<>(HeroPower.PASSIVES);
+            Collections.shuffle(extra, random);
+            for (HeroPower p : extra) {
+                if (!pool.contains(p)) {
+                    pool.add(p);
+                }
+            }
+            int count = Math.min(2 + (tier - 1) / 2, pool.size());
             for (int i = 0; i < count; i++) {
-                result.add(level(passives.get(i), tier, index++));
+                result.add(level(pool.get(i), tier, index++));
             }
         } else {
             if (gear.isTool()) {
-                // Tools always speed you up while you hold them.
                 result.add(level(HeroPower.QUICK_HANDS, tier, index++));
             }
-            int count = Math.min(1 + (tier - 1) / 3, hits.size());
+            List<HeroPower> pool = interleave(themes, HeroTheme::hits);
+            List<HeroPower> extra = new ArrayList<>(HeroPower.ON_HIT);
+            Collections.shuffle(extra, random);
+            for (HeroPower p : extra) {
+                if (!pool.contains(p)) {
+                    pool.add(p);
+                }
+            }
+            int count = Math.min(1 + (tier - 1) / 3, pool.size());
             for (int i = 0; i < count; i++) {
-                result.add(level(hits.get(i), tier, index++));
+                result.add(level(pool.get(i), tier, index++));
             }
         }
         return result;
@@ -147,7 +249,7 @@ public final class HeroGenerator {
         double scale = 1.0 + tier * 0.35;
         boolean suit = gear == HeroGear.SUIT;
 
-        String core = pick(random, bracket, null);
+        String core = pick(random, bracket, (String[]) null);
         String support = pick(random, Math.max(bracket - 1, 0), core);
         String rare = pick(random, bracket + 1, core, support);
 

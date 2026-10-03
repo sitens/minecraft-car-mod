@@ -66,7 +66,8 @@ public final class HeroItems {
     public static @Nullable HeroDesign designOf(ItemStack stack) {
         HeroGear gear = gearOf(stack);
         int tier = tierOf(stack);
-        return gear == null || tier < 1 ? null : HeroGenerator.design(tier, gear);
+        return gear == null || tier < 1 ? null
+                : HeroGenerator.design(stack.getOrDefault(ModComponents.HERO_THEME, ""), tier, gear);
     }
 
     public static Item costItem(HeroDesign.Cost cost) {
@@ -77,6 +78,7 @@ public final class HeroItems {
     public static ItemStack create(HeroDesign design) {
         ItemStack stack = new ItemStack(itemFor(design.gear()));
         stack.set(ModComponents.HERO_TIER, design.tier());
+        stack.set(ModComponents.HERO_THEME, design.query());
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(design.name())
                 .withStyle(style -> style.withItalic(false).withColor(design.color())));
         stack.set(DataComponents.DYED_COLOR, new DyedItemColor(design.color()));
@@ -93,7 +95,12 @@ public final class HeroItems {
     private static List<Component> lore(HeroDesign design) {
         List<Component> lines = new ArrayList<>();
         lines.add(line("Tier " + design.tier() + " " + design.gear().label(), ChatFormatting.GOLD));
-        lines.add(line("Superpowers:", ChatFormatting.AQUA));
+        boolean suit = design.gear() == HeroGear.SUIT;
+        for (HeroDesign.AbilityLevel ability : design.abilities()) {
+            String use = !ability.ability().isActive() ? "always on" : suit ? "press the ability key" : "right-click";
+            lines.add(line(" * " + ability.describe() + " [" + use + "]", ChatFormatting.LIGHT_PURPLE));
+        }
+        lines.add(line("Extra powers:", ChatFormatting.AQUA));
         for (HeroDesign.PowerLevel power : design.powers()) {
             lines.add(line(" - " + power.describe(), ChatFormatting.GREEN));
         }

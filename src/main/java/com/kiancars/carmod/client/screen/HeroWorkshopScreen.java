@@ -4,6 +4,8 @@ import com.kiancars.carmod.hero.HeroDesign;
 import com.kiancars.carmod.hero.HeroGear;
 import com.kiancars.carmod.hero.HeroGenerator;
 import com.kiancars.carmod.hero.HeroItems;
+import com.kiancars.carmod.hero.HeroNetwork;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import com.kiancars.carmod.menu.HeroWorkshopMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -43,6 +45,7 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
 
     private final List<HeroDesign> designs = new ArrayList<>();
     private final List<ItemStack> icons = new ArrayList<>();
+    private String committed = "";
     private int builtForTier = -1;
     private String builtForQuery = null;
     private int listScroll;
@@ -63,11 +66,14 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
     @Override
     protected void init() {
         super.init();
-        this.search = new EditBox(this.font, leftPos + LIST_X, topPos + 20, LIST_W, 16, Component.literal("Search"));
-        this.search.setHint(Component.literal("Search the AI gear..."));
-        this.search.setMaxLength(40);
+        this.search = new EditBox(this.font, leftPos + LIST_X, topPos + 20, LIST_W - 32, 16, Component.literal("Search"));
+        this.search.setHint(Component.literal("What power? e.g. teleport"));
+        this.search.setMaxLength(HeroGenerator.MAX_QUERY);
         this.addRenderableWidget(this.search);
         this.setInitialFocus(this.search);
+
+        this.addRenderableWidget(Button.builder(Component.literal("Go"), b -> submit())
+                .bounds(leftPos + LIST_X + LIST_W - 30, topPos + 20, 30, 16).build());
 
         for (int i = 0; i < ROWS; i++) {
             final int row = i;
@@ -81,7 +87,8 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
 
         this.craftButton = this.addRenderableWidget(Button.builder(Component.literal("Craft this"), b -> {
             if (selected != null) {
-                press(HeroWorkshopMenu.craftButtonId(selected.tier(), selected.gear()));
+                ClientPacketDistributor.sendToServer(new HeroNetwork.CraftPayload(
+                        selected.query(), selected.tier(), selected.gear().ordinal()));
             }
         }).bounds(leftPos + DETAIL_X, topPos + DETAIL_Y + DETAIL_H + 6, DETAIL_W, 20).build());
 
@@ -106,7 +113,7 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
 
     /** Rebuilds the gear list when the player tier or the search text changed. */
     private void refreshList() {
-        String query = search == null ? "" : search.getValue();
+        String query = committed;
         int tier = menu.tier();
         if (tier == builtForTier && query.equals(builtForQuery)) {
             return;
@@ -116,19 +123,25 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
         builtForQuery = query;
         designs.clear();
         icons.clear();
-        for (int t = tier; t >= 1; t--) {
+        for (int t = tier; t >= 1 && !query.isEmpty(); t--) {
             for (HeroGear gear : HeroGear.values()) {
-                HeroDesign design = HeroGenerator.design(t, gear);
-                if (design.matches(query)) {
-                    designs.add(design);
-                    icons.add(HeroItems.create(design));
-                }
+                HeroDesign design = HeroGenerator.design(query, t, gear);
+                designs.add(design);
+                icons.add(HeroItems.create(design));
             }
         }
         listScroll = 0;
         if (tierChanged || selected == null || !designs.contains(selected)) {
             select(designs.isEmpty() ? -1 : 0);
         }
+    }
+
+    /** Sends what was typed to the AI: it designs a suit and tools for it. */
+    private void submit() {
+        committed = HeroGenerator.normalize(search.getValue());
+        builtForQuery = null;
+        selected = null;
+        refreshList();
     }
 
     private void select(int index) {
@@ -141,7 +154,9 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
         List<FormattedCharSequence> lines = new ArrayList<>();
         List<Integer> colors = new ArrayList<>();
         if (selected == null) {
-            add(lines, colors, "No gear matches your search.", 0xFFFFFFFF);
+            add(lines, colors, "Tell the AI what kind of hero you want, like teleport, spider-man, iron man, ice dragon or anything you can think of. Type it, press Enter (or Go), and the AI will design a suit and tools with powers to match.", 0xFFFFFFFF);
+            add(lines, colors, " ", 0xFFFFFFFF);
+            add(lines, colors, "Suit powers: press the ability key (default G). H switches ability. Tools and blades: right-click.", 0xFFAAAAAA);
             detailLines = lines;
             detailColors = colors;
             return;
@@ -149,7 +164,15 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
         add(lines, colors, selected.name(), 0xFF000000 | selected.color());
         add(lines, colors, "Tier " + selected.tier() + " " + selected.gear().label(), 0xFFFFAA00);
         add(lines, colors, " ", 0xFFFFFFFF);
-        add(lines, colors, "Superpowers", 0xFF55FFFF);
+        if (!HeroGenerator.understands(selected.query())) {
+            add(lines, colors, "The AI did not know that word, so it improvised.", 0xFFAAAAAA);
+        }
+        add(lines, colors, "Abilities", 0xFFFF77FF);
+        for (HeroDesign.AbilityLevel ability : selected.abilities()) {
+            add(lines, colors, "* " + ability.describe(), 0xFFFFAAFF);
+        }
+        add(lines, colors, " ", 0xFFFFFFFF);
+        add(lines, colors, "Extra powers", 0xFF55FFFF);
         for (HeroDesign.PowerLevel power : selected.powers()) {
             add(lines, colors, "- " + power.describe(), 0xFF55FF55);
         }
@@ -207,6 +230,10 @@ public class HeroWorkshopScreen extends AbstractContainerScreen<HeroWorkshopMenu
     public boolean keyPressed(KeyEvent event) {
         if (event.isEscape()) {
             this.minecraft.player.closeContainer();
+            return true;
+        }
+        if (this.search.isFocused() && (event.key() == 257 || event.key() == 335)) {
+            submit();
             return true;
         }
         return this.search.keyPressed(event) || this.search.canConsumeInput() || super.keyPressed(event);

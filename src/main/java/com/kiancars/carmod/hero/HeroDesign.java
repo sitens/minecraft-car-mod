@@ -8,8 +8,8 @@ import java.util.Locale;
  * what it costs to craft. Pure data, no Minecraft classes, so any tier can
  * be generated (and tested) anywhere.
  */
-public record HeroDesign(int tier, HeroGear gear, String name, int color, List<PowerLevel> powers,
-                         List<Upgrade> upgrades, List<Cost> cost) {
+public record HeroDesign(String query, int tier, HeroGear gear, String name, int color, List<PowerLevel> powers,
+                         List<AbilityLevel> abilities, List<Upgrade> upgrades, List<Cost> cost) {
 
     /** What an upgrade improves. */
     public enum Stat {
@@ -47,6 +47,18 @@ public record HeroDesign(int tier, HeroGear gear, String name, int color, List<P
             };
             return name + ": " + value + (stat == Stat.MAX_HEALTH ? "" : " " + stat.label());
         }
+    }
+
+    /** An active ability at a strength. */
+    public record AbilityLevel(HeroAbility ability, int level) {
+        public String describe() {
+            return ability.describe(level);
+        }
+    }
+
+    /** The abilities you trigger on purpose (everything except always-on flight). */
+    public List<AbilityLevel> activeAbilities() {
+        return abilities.stream().filter(a -> a.ability().isActive()).toList();
     }
 
     /** A superpower at a strength. */

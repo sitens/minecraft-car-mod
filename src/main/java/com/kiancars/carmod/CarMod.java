@@ -2,6 +2,7 @@ package com.kiancars.carmod;
 
 import com.kiancars.carmod.event.ModEvents;
 import com.kiancars.carmod.hero.HeroEvents;
+import com.kiancars.carmod.hero.HeroNetwork;
 import com.kiancars.carmod.registry.ModAttachments;
 import com.kiancars.carmod.registry.ModBlocks;
 import com.kiancars.carmod.registry.ModComponents;
@@ -44,5 +45,8 @@ public class CarMod {
         NeoForge.EVENT_BUS.addListener(HeroEvents::onDamagePre);
         NeoForge.EVENT_BUS.addListener(HeroEvents::onDamagePost);
         NeoForge.EVENT_BUS.addListener(HeroEvents::onDeath);
+        NeoForge.EVENT_BUS.addListener(HeroEvents::onRightClick);
+        NeoForge.EVENT_BUS.addListener(HeroEvents::onLogout);
+        modEventBus.addListener(HeroNetwork::register);
     }
 }

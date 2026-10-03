@@ -8,6 +8,7 @@ import com.kiancars.carmod.hero.HeroProgress;
 import com.kiancars.carmod.registry.ModBlocks;
 import com.kiancars.carmod.registry.ModMenus;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,8 +26,8 @@ import net.minecraft.world.item.Items;
  * AI-generated ingredient list. That's what lets the recipes be endless (they
  * aren't recipes in the game's recipe book at all).
  * <p>
- * Button ids: {@code tier * 8 + gearIndex} crafts that piece of gear;
- * {@link #UPGRADE_BUTTON} spends kills to move up a tier.
+ * Crafting arrives as a {@code HeroNetwork.CraftPayload}; the one menu button,
+ * {@link #UPGRADE_BUTTON}, spends kills to move up a tier.
  */
 public class HeroWorkshopMenu extends AbstractContainerMenu {
 
@@ -44,10 +45,6 @@ public class HeroWorkshopMenu extends AbstractContainerMenu {
         this.addDataSlot(tierSlot);
         this.addDataSlot(killsSlot);
         refresh();
-    }
-
-    public static int craftButtonId(int tier, HeroGear gear) {
-        return tier * 8 + gear.ordinal();
     }
 
     /** Highest tier the player has unlocked (kept in sync with the server). */
@@ -95,29 +92,33 @@ public class HeroWorkshopMenu extends AbstractContainerMenu {
             return true;
         }
 
-        int tier = id / 8;
-        HeroGear gear = HeroGear.byIndex(id % 8);
-        if (id < 0 || gear == null || tier < 1 || tier > progress.tier()) {
-            return false;
+        return false;
+    }
+
+    /** Crafts one piece of gear for a search, if the player unlocked the tier and has the ingredients. */
+    public static void craft(ServerPlayer player, String query, int tier, HeroGear gear) {
+        HeroProgress progress = HeroProgress.of(player);
+        String q = HeroGenerator.normalize(query);
+        if (q.isEmpty() || tier < 1 || tier > progress.tier()) {
+            return;
         }
-        HeroDesign design = HeroGenerator.design(tier, gear);
-        if (!hasIngredients(clicker, design)) {
-            clicker.displayClientMessage(Component.literal("You don't have all the ingredients yet."), true);
-            return false;
+        HeroDesign design = HeroGenerator.design(q, tier, gear);
+        if (!hasIngredients(player, design)) {
+            player.displayClientMessage(Component.literal("You do not have all the ingredients yet."), true);
+            return;
         }
-        if (!clicker.hasInfiniteMaterials()) {
+        if (!player.hasInfiniteMaterials()) {
             for (HeroDesign.Cost cost : design.cost()) {
                 Item item = HeroItems.costItem(cost);
-                clicker.getInventory().clearOrCountMatchingItems(stack -> stack.is(item), cost.count(),
-                        clicker.inventoryMenu.getCraftSlots());
+                player.getInventory().clearOrCountMatchingItems(stack -> stack.is(item), cost.count(),
+                        player.inventoryMenu.getCraftSlots());
             }
         }
         ItemStack result = HeroItems.create(design);
-        if (!clicker.getInventory().add(result)) {
-            clicker.drop(result, false);
+        if (!player.getInventory().add(result)) {
+            player.drop(result, false);
         }
-        clicker.level().playSound(null, clicker.blockPosition(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.8F, 1.4F);
-        return true;
+        player.level().playSound(null, player.blockPosition(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.8F, 1.4F);
     }
 
     private static boolean hasIngredients(Player player, HeroDesign design) {
